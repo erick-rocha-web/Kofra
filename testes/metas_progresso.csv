@@ -1,0 +1,4 @@
+id;papel;valor_total;movimentacoes;obs_guardado;obs_falta;obs_concluida;descricao
+MP01;base;12000,00;;0,00;12000,00;nao;meta recém-criada
+MP02;variacao;12000,00;+1500,00|-200,00;1300,00;10700,00;nao;um aporte e uma retirada
+MP03;extremo;12000,00;+1500,00|-200,00|+11000,00;12300,00;;sim;passou do valor total: meta concluída

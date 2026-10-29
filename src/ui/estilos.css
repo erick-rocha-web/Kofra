@@ -1,0 +1,432 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Kofra · direção Marinho
+  Layout: barra lateral fixa no computador; barra superior + navegação inferior no celular.
+  Tokens: claro no :root; escuro pelo tema do sistema/visualizador; a escolha feita em
+  Configurações (data-kofra-tema) vence as duas.
+*/
+:root {
+  --bg: #f2f5fa;
+  --side: #f9fbfe;
+  --surface: #ffffff;
+  --surface2: #eef2f8;
+  --border: #dce3ee;
+  --text: #0a1222;
+  --muted: #52607a;
+  --brand: #07718e;
+  --on-brand: #ffffff;
+  --brand-soft: rgba(7, 113, 142, 0.1);
+  --pos: #157745;
+  --pos-soft: rgba(21, 119, 69, 0.1);
+  --neg: #bb3434;
+  --neg-soft: rgba(187, 52, 52, 0.1);
+  --inv: #6a4fe0;
+  --inv-soft: rgba(106, 79, 224, 0.1);
+  --neutral: #52607a;
+  --warn: #a35f00;
+  --warn-soft: rgba(196, 122, 10, 0.13);
+  --field: #ffffff;
+  --rain: #b9c4d6;
+  --line: #c5cfdf;
+  --ring: rgba(7, 113, 142, 0.22);
+  --overlay: rgba(10, 18, 34, 0.45);
+  --shadow: 0 1px 2px rgba(10, 18, 34, 0.06), 0 12px 32px rgba(10, 18, 34, 0.12);
+  --cat-0: #8e97a8;
+  --cat-1: #2a78d6;
+  --cat-2: #eb6834;
+  --cat-3: #1baf7a;
+  --cat-4: #eda100;
+  --on-cat-4: #0b0b0b;
+  --cat-5: #e87ba4;
+  --cat-6: #008300;
+  --cat-7: #6250d6;
+  --cat-8: #e34948;
+  --c1: #077a99;
+  --c2: #6a4fe0;
+  --c3: #17804a;
+  --c4: #b7791f;
+  --c5: #52607a;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #070b14;
+    --side: #0a0f1c;
+    --surface: #0e1526;
+    --surface2: #141d32;
+    --border: #1f2a44;
+    --text: #e7edfa;
+    --muted: #8d9ab8;
+    --brand: #36d2f0;
+    --on-brand: #04121f;
+    --brand-soft: rgba(54, 210, 240, 0.12);
+    --pos: #6ee7a0;
+    --pos-soft: rgba(110, 231, 160, 0.13);
+    --neg: #ff7a7a;
+    --neg-soft: rgba(255, 122, 122, 0.13);
+    --inv: #9d8cff;
+    --inv-soft: rgba(157, 140, 255, 0.14);
+    --neutral: #8d9ab8;
+    --warn: #f5b95f;
+    --warn-soft: rgba(245, 185, 95, 0.14);
+    --field: #070b14;
+    --rain: #3a4766;
+    --line: #2c3a5c;
+    --ring: rgba(54, 210, 240, 0.2);
+    --overlay: rgba(2, 4, 10, 0.66);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.45);
+    --cat-0: #5d6a85;
+    --cat-1: #3987e5;
+    --cat-2: #d95926;
+    --cat-3: #199e70;
+    --cat-4: #c98500;
+    --on-cat-4: #ffffff;
+    --cat-5: #d55181;
+    --cat-6: #008300;
+    --cat-7: #9085e9;
+    --cat-8: #e66767;
+    --c1: #36d2f0;
+    --c2: #9d8cff;
+    --c3: #6ee7a0;
+    --c4: #f5b95f;
+    --c5: #5b6b8c;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #070b14;
+  --side: #0a0f1c;
+  --surface: #0e1526;
+  --surface2: #141d32;
+  --border: #1f2a44;
+  --text: #e7edfa;
+  --muted: #8d9ab8;
+  --brand: #36d2f0;
+  --on-brand: #04121f;
+  --brand-soft: rgba(54, 210, 240, 0.12);
+  --pos: #6ee7a0;
+  --pos-soft: rgba(110, 231, 160, 0.13);
+  --neg: #ff7a7a;
+  --neg-soft: rgba(255, 122, 122, 0.13);
+  --inv: #9d8cff;
+  --inv-soft: rgba(157, 140, 255, 0.14);
+  --neutral: #8d9ab8;
+  --warn: #f5b95f;
+  --warn-soft: rgba(245, 185, 95, 0.14);
+  --field: #070b14;
+  --rain: #3a4766;
+  --line: #2c3a5c;
+  --ring: rgba(54, 210, 240, 0.2);
+  --overlay: rgba(2, 4, 10, 0.66);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.45);
+  --cat-0: #5d6a85;
+  --cat-1: #3987e5;
+  --cat-2: #d95926;
+  --cat-3: #199e70;
+  --cat-4: #c98500;
+  --on-cat-4: #ffffff;
+  --cat-5: #d55181;
+  --cat-6: #008300;
+  --cat-7: #9085e9;
+  --cat-8: #e66767;
+  --c1: #36d2f0;
+  --c2: #9d8cff;
+  --c3: #6ee7a0;
+  --c4: #f5b95f;
+  --c5: #5b6b8c;
+  color-scheme: dark;
+}
+
+/* Escolha feita no próprio Kofra (vem depois para vencer as regras acima). */
+:root[data-kofra-tema='claro'] {
+  --bg: #f2f5fa;
+  --side: #f9fbfe;
+  --surface: #ffffff;
+  --surface2: #eef2f8;
+  --border: #dce3ee;
+  --text: #0a1222;
+  --muted: #52607a;
+  --brand: #07718e;
+  --on-brand: #ffffff;
+  --brand-soft: rgba(7, 113, 142, 0.1);
+  --pos: #157745;
+  --pos-soft: rgba(21, 119, 69, 0.1);
+  --neg: #bb3434;
+  --neg-soft: rgba(187, 52, 52, 0.1);
+  --inv: #6a4fe0;
+  --inv-soft: rgba(106, 79, 224, 0.1);
+  --neutral: #52607a;
+  --warn: #a35f00;
+  --warn-soft: rgba(196, 122, 10, 0.13);
+  --field: #ffffff;
+  --rain: #b9c4d6;
+  --line: #c5cfdf;
+  --ring: rgba(7, 113, 142, 0.22);
+  --overlay: rgba(10, 18, 34, 0.45);
+  --shadow: 0 1px 2px rgba(10, 18, 34, 0.06), 0 12px 32px rgba(10, 18, 34, 0.12);
+  --cat-0: #8e97a8;
+  --cat-1: #2a78d6;
+  --cat-2: #eb6834;
+  --cat-3: #1baf7a;
+  --cat-4: #eda100;
+  --on-cat-4: #0b0b0b;
+  --cat-5: #e87ba4;
+  --cat-6: #008300;
+  --cat-7: #6250d6;
+  --cat-8: #e34948;
+  --c1: #077a99;
+  --c2: #6a4fe0;
+  --c3: #17804a;
+  --c4: #b7791f;
+  --c5: #52607a;
+  color-scheme: light;
+}
+
+:root[data-kofra-tema='escuro'] {
+  --bg: #070b14;
+  --side: #0a0f1c;
+  --surface: #0e1526;
+  --surface2: #141d32;
+  --border: #1f2a44;
+  --text: #e7edfa;
+  --muted: #8d9ab8;
+  --brand: #36d2f0;
+  --on-brand: #04121f;
+  --brand-soft: rgba(54, 210, 240, 0.12);
+  --pos: #6ee7a0;
+  --pos-soft: rgba(110, 231, 160, 0.13);
+  --neg: #ff7a7a;
+  --neg-soft: rgba(255, 122, 122, 0.13);
+  --inv: #9d8cff;
+  --inv-soft: rgba(157, 140, 255, 0.14);
+  --neutral: #8d9ab8;
+  --warn: #f5b95f;
+  --warn-soft: rgba(245, 185, 95, 0.14);
+  --field: #070b14;
+  --rain: #3a4766;
+  --line: #2c3a5c;
+  --ring: rgba(54, 210, 240, 0.2);
+  --overlay: rgba(2, 4, 10, 0.66);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.45);
+  --cat-0: #5d6a85;
+  --cat-1: #3987e5;
+  --cat-2: #d95926;
+  --cat-3: #199e70;
+  --cat-4: #c98500;
+  --on-cat-4: #ffffff;
+  --cat-5: #d55181;
+  --cat-6: #008300;
+  --cat-7: #9085e9;
+  --cat-8: #e66767;
+  --c1: #36d2f0;
+  --c2: #9d8cff;
+  --c3: #6ee7a0;
+  --c4: #f5b95f;
+  --c5: #5b6b8c;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* faixa do topo (área segura do celular) na cor da barra superior */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 40;
+    background: var(--side);
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--brand-soft);
+  }
+  input[type='date']::-webkit-calendar-picker-indicator {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .f-valor {
+    font-stretch: 125%;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .f-titulo {
+    font-stretch: 112%;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .f-num {
+    font-variant-numeric: tabular-nums;
+  }
+  .selo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .rotulo-secao {
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cartao {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+  }
+  .gutter {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .rolagem-fina {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .texto-aula p {
+    margin: 0 0 14px;
+  }
+  .texto-aula h2 {
+    margin: 26px 0 10px;
+    font-size: 18px;
+    line-height: 24px;
+    font-stretch: 112%;
+    font-weight: 700;
+  }
+  .texto-aula ul,
+  .texto-aula ol {
+    margin: 0 0 14px;
+    padding-left: 20px;
+  }
+  .texto-aula ul {
+    list-style: disc;
+  }
+  .texto-aula ol {
+    list-style: decimal;
+  }
+  .texto-aula li {
+    margin: 4px 0;
+  }
+  .texto-chat p {
+    margin: 0 0 10px;
+  }
+  .texto-chat > :last-child {
+    margin-bottom: 0;
+  }
+  .texto-chat h2 {
+    margin: 14px 0 6px;
+    font-size: 15.5px;
+  }
+  .texto-chat ul,
+  .texto-chat ol {
+    margin: 0 0 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes kofra-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes kofra-folha {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes kofra-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.anima-entrar {
+  animation: kofra-entrar 0.22s ease-out both;
+}
+.anima-folha {
+  animation: kofra-folha 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.anima-fade {
+  animation: kofra-fade 0.18s ease-out both;
+}
+.anima-modal {
+  animation: kofra-folha 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@media (min-width: 640px) {
+  .anima-modal {
+    animation: kofra-entrar 0.2s ease-out both;
+  }
+}

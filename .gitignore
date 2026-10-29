@@ -1,0 +1,4 @@
+node_modules/
+ferramentas/fase4/saida/
+*.log
+.DS_Store

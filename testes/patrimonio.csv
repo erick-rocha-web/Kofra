@@ -1,0 +1,9 @@
+id;papel;mes;liquidez;investimentos;bens;dividas;obs_patrimonio;precisao_obs;descricao
+PT01;base;2026-10;10000,00;0,00;0,00;0,00;10000,00;centavos;uma conta com 10.000
+PT02;variacao;2026-10;10533,50;0,00;0,00;0,00;10533,50;centavos;mais US$ 100 convertidos pela cotação do dia (533,50)
+PT03;variacao;2026-10;10533,50;0,00;30000,00;0,00;40533,50;centavos;mais um bem (carro) de 30.000
+PT04;variacao;2026-10;10533,50;0,00;30000,00;12000,00;28533,50;centavos;mais uma dívida de 12.000 (subtrai)
+PT05;variacao;2026-10;10533,21;15450,00;30000,00;12000,00;43983,21;centavos;mais investimentos (valor atual 15.450); a cotação do dólar mudou (533,21)
+PT06;validacao;2026-11;10533,21;15450,00;29000,00;12000,00;42983;reais;carro reavaliado em novembro: vale de novembro em diante (tela mostra sem centavos)
+PT07;validacao;2026-09;5000,00;0,00;0,00;0,00;5000,00;centavos;item criado em setembro: nada existe antes dele
+PT08;validacao;2026-10;15533,50;15450,00;30000,00;12000,00;48983,50;centavos;o item de setembro continua valendo em outubro (herança mês a mês)

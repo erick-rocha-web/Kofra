@@ -1,0 +1,3 @@
+id;papel;receita;investir;despesas;obs_percentual;descricao
+DI01;base;6000,15;1800,05;2533,34;60;despesas do mês sobre (receita − investir)
+DI02;validacao;6000,15;1200,03;2533,34;53;

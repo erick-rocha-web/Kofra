@@ -1,0 +1,3 @@
+id;papel;data_compra;valor_total;parcelas;obs_previa;obs_parcela_1;obs_parcela_2;obs_parcela_3;obs_data_parcela_1;obs_data_parcela_2;descricao
+P01;base;2026-10;1000,00;3;3x de R$ 333,33;333,34;333,33;333,33;01/10/2026;01/11/2026;a primeira parcela absorve a sobra de centavos (para cima)
+P02;validacao;05/10/2026;100,00;6;6x de R$ 16,67;16,65;16,67;;01/10/2026;01/11/2026;a primeira parcela absorve a sobra de centavos (para baixo)

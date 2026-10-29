@@ -1,0 +1,15 @@
+id;papel;hoje;valor_total;guardado;prazo;obs_sugestao;descricao
+G01;base;27/10/2026;12000,00;0,00;31/12/2027;857;14 meses
+G02;variacao;27/10/2026;12000,00;0,00;30/09/2027;1091;11 meses
+G03;variacao;27/10/2026;12000,00;0,00;15/11/2026;12000;1 mês
+G04;extremo;27/10/2026;12000,00;0,00;31/10/2026;12000;mesmo mês: conta como 1
+G05;validacao;27/10/2026;12000,00;0,00;26/10/2027;1000;12 meses (o dia não importa)
+G06;validacao;27/10/2026;12000,00;0,00;28/10/2027;1000;12 meses
+G07;validacao;27/10/2026;12000,00;0,00;01/12/2026;6000;2 meses
+G08;validacao;27/10/2026;12000,00;0,00;30/11/2026;12000;1 mês
+G09;extremo;27/10/2026;12000,00;0,00;27/10/2026;12000;prazo igual a hoje
+G10;extremo;27/10/2026;12000,00;0,00;26/10/2026;oculto;prazo no passado
+G11;extremo;27/10/2026;12000,00;0,00;01/09/2026;oculto;prazo no passado
+G12;validacao;27/10/2026;20000,00;0,00;31/12/2027;1429;
+G13;validacao;27/10/2026;20000,00;10850,00;31/12/2027;654;guardado vindo de investimento vinculado: usa só o que falta
+G14;extremo;27/10/2026;10000,00;10850,00;31/12/2027;oculto;já tem mais do que o valor total

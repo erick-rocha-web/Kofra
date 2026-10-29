@@ -1,0 +1,12 @@
+id;papel;mes;receita;modo;percentual;valor_fixo;obs_investir;obs_percentual_exibido;descricao
+I01;base;2026-10;6000,00;fixo;;750,00;750,00;12,5;valor digitado: o percentual exibido é valor ÷ receita
+I02;variacao;2026-10;6000,00;percentual;100;;6000,00;;investir 100% da receita
+I03;variacao;2026-10;6000,05;percentual;100;;6000,05;;no modo percentual o valor acompanha a receita
+I04;validacao;2026-10;6000,05;percentual;30;;1800,02;;1.800,015 vira 1.800,02
+I05;validacao;2026-10;6000,15;percentual;30;;1800,05;;1.800,045 vira 1.800,05 (meio centavo para cima, não arredondamento bancário)
+I06;validacao;2026-10;6000,15;percentual;20;;1200,03;;1.200,03
+I07;validacao;2026-11;1000,00;percentual;30;;300,00;;novembro exibia 30% (configurado a partir de outubro)
+I08;validacao;2026-11;1500,00;percentual;30;;450,00;;receita do mês aumentou e o investir acompanhou
+I09;validacao;2026-12;1000,00;percentual;30;;300,00;;dezembro também exibia 30%
+I10;extremo;2026-09;14000,00;nenhum;;;0,00;;mês anterior à primeira configuração: zero
+I11;extremo;2026-07;1000,00;nenhum;;;0,00;;julho: zero

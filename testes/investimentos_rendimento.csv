@@ -1,0 +1,6 @@
+id;papel;ativo;valor_investido;valor_atual;obs_rendimento;obs_rendimento_pct;descricao
+R01;base;CDB (renda fixa);10000,00;10850,00;850,00;8,5;a referência exibe 8.5% (com ponto)
+R02;variacao;Ações (renda variável);5000,00;4600,00;-400,00;-8,0;rendimento negativo
+R03;validacao;Total da carteira;15000,00;15450,00;450,00;3,0;totais são somas; percentual sobre o total investido
+R04;extremo;Prévia do formulário;0,00;100,00;100,00;;a prévia mostra só o valor; percentual com investido zero não observado
+R05;validacao;Prévia do formulário;80,00;100,00;20,00;;

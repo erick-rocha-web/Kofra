@@ -1,0 +1,4 @@
+id;papel;nivel;meses;custo_mensal;obs_meta;descricao
+M01;base;Blindado;12;200,00;2400,00;configuração já existente na conta
+M02;variacao;Blindado;12;500,00;6000,00;custo vindo da seleção de gastos do mês passado (uma despesa de 500)
+M03;variacao;Básico;6;2500,00;15000,00;

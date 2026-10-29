@@ -1,0 +1,6 @@
+id;valor_inicial;valor_mensal;taxa;unidade_taxa;periodo;unidade_periodo;ref_valor_final;ref_total_investido;ref_total_juros;ref_pct_investido;ref_pct_juros;descricao
+XJC1;2500,00;350,00;0,85;mensal;36;meses;18058,75;15100,00;2958,75;83,6;16,4;taxa mensal fracionária, 3 anos em meses
+XJC2;0,00;1000,00;10,50;anual;10;anos;205152,47;120000,00;85152,47;58,5;41,5;sem valor inicial, taxa anual
+XJC3;50000,00;0,00;13,25;anual;7;anos;119464,12;50000,00;69464,12;41,9;58,1;sem aporte mensal
+XJC4;1234,56;78,90;1,15;mensal;5;anos;9215,69;5968,56;3247,13;64,8;35,2;centavos nos dois valores
+XJC5;100000,00;2500,00;0,50;mensal;240;meses;1486122,69;700000,00;786122,69;47,1;52,9;prazo longo (240 meses)

@@ -1,0 +1,6 @@
+id;papel;indicador;filtro;valor_fim_janela;valor_fim_janela_anterior;obs_valor;obs_variacao;descricao
+VE01;base;Patrimônio;Mês atual;48983,50;5000,00;48983,50;43983,50;fim de outubro comparado com o fim de setembro
+VE02;variacao;Investimentos;Mês atual;15450,00;0,00;15450,00;sem anterior;
+VE03;variacao;Reserva;Mês atual;16500,00;0,00;16500,00;sem anterior;como a referência guarda o histórico da reserva não foi confirmado
+VE04;validacao;Patrimônio;3 meses;48983,50;0,00;48983,50;sem anterior;fim da janela anterior = julho (vazio)
+VE05;validacao;Patrimônio;Personalizado;48983,50;0,00;48983,50;sem anterior;fim da janela anterior = agosto (vazio)

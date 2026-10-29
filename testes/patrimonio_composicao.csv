@@ -1,0 +1,2 @@
+id;papel;mes;itens;obs_percentuais;descricao
+PC01;base;2026-10;Carro:bem:30000,00|Renda fixa:investimento:10850,00|Conta:liquidez:10000,00|Renda variável:investimento:4600,00|Dólar:liquidez:533,50|Financiamento:divida:12000,00;54|19|18|8|1|-;base = liquidez + investimentos (agrupados por tipo) + bens = 55.983,50; dívidas ficam fora; percentual inteiro

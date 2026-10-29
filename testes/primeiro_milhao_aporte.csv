@@ -1,0 +1,6 @@
+id;valor_inicial;prazo;unidade_prazo;taxa;unidade_taxa;ref_aporte;ref_investido;ref_juros;ref_pct_investido;ref_pct_juros;ref_texto;descricao
+XPA1;0,00;30;anos;0,80;mensal;481,60;173375,89;826624,11;17,3;82,7;em 30 anos;sem valor inicial
+XPA2;25000,00;15;anos;10,00;anual;2247,67;429579,80;570420,20;43,0;57,0;em 15 anos;taxa anual
+XPA3;100000,00;120;meses;1,00;mensal;2912,39;449486,24;550513,76;44,9;55,1;em 120 meses;prazo em meses
+XPA4;1000,00;25;anos;6,00;anual;1472,31;442693,50;557306,50;44,3;55,7;em 25 anos;valor inicial pequeno, taxa anual
+XPA5;500000,00;5;anos;0,70;mensal;3234,18;694051,06;305948,94;69,4;30,6;em 5 anos;valor inicial alto, prazo curto

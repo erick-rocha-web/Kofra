@@ -1,0 +1,3 @@
+id;papel;mes;receitas_confirmadas;receitas_previstas_pendentes;obs_receita;obs_a_receber;descricao
+RF01;base;2026-11;1000,00;500,00;1000,00;500,00;receita futura não entra no total do mês; aparece como valor a receber
+RF02;variacao;2026-11;1500,00;0,00;1500,00;;depois de marcar como recebida passa a contar na receita

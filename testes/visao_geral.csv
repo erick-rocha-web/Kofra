@@ -1,0 +1,9 @@
+id;papel;filtro;janela;janela_anterior;receitas_por_mes;gastos_por_mes;obs_receita;obs_receita_variacao;obs_gastos;obs_gastos_variacao;obs_saldo_periodo;descricao
+V01;base;Mês atual;2026-10..2026-10;2026-09..2026-09;2026-09:4000,00|2026-10:6000,15;2026-09:500,00|2026-10:2533,34;6000,15;2000,15;2533,34;2033,34;3466,81;comparado com o mês anterior
+V02;variacao;3 meses;2026-08..2026-10;2026-05..2026-07;2026-09:4000,00|2026-10:6000,15;2026-09:500,00|2026-10:2533,34;10000,15;sem anterior;3033,34;sem anterior;6966,81;janela anterior vazia
+V03;variacao;Personalizado;2026-09..2026-10;2026-07..2026-08;2026-09:4000,00|2026-10:6000,15;2026-09:500,00|2026-10:2533,34;10000,15;sem anterior;3033,34;sem anterior;6966,81;comparado com os 2 meses anteriores
+V04;validacao;Mês atual;2026-10..2026-10;2026-09..2026-09;2026-09:14000,00|2026-10:6000,15;2026-09:500,00|2026-10:2533,34;6000,15;-7999,85;;;;depois do bônus de setembro: variação negativa
+V05;validacao;3 meses;2026-08..2026-10;2026-05..2026-07;2026-09:14000,00|2026-10:6000,15;2026-09:500,00|2026-10:2533,34;20000,15;sem anterior;;;16966,81;
+V06;validacao;3 meses;2026-08..2026-10;2026-05..2026-07;2026-07:1000,00|2026-09:14000,00|2026-10:6000,15;2026-09:500,00|2026-10:2549,99;20000,15;19000,15;3049,99;sem anterior;16950,16;receita de julho entra só na janela anterior; gastos anteriores = 0
+V07;validacao;6 meses;2026-05..2026-10;2025-11..2026-04;2026-07:1000,00|2026-09:14000,00|2026-10:6000,15;2026-09:500,00|2026-10:2549,99;21000,15;sem anterior;3049,99;sem anterior;17950,16;saldo do período não desconta o investir
+V08;validacao;Personalizado;2026-09..2026-10;2026-07..2026-08;2026-07:1000,00|2026-09:14000,00|2026-10:6000,15;2026-09:500,00|2026-10:2549,99;20000,15;19000,15;3049,99;sem anterior;16950,16;comparado com os 2 meses anteriores

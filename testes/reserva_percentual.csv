@@ -1,0 +1,8 @@
+id;papel;meta;locais;obs_valor_atual;obs_percentual;obs_faixa_referencia;estado_kofra;descricao
+RS01;base;2400,00;;0,00;0;neutra (sem reserva);zero;nenhum local cadastrado
+RS02;variacao;15000,00;6225,00;6225,00;42;laranja;parcial;41,5% arredonda para 42%
+RS03;variacao;15000,00;11250,00;11250,00;75;amarela;parcial;
+RS04;extremo;15000,00;14925,00;14925,00;100;verde;parcial;99,5% aparece como 100% sem estar completa
+RS05;extremo;15000,00;16500,00;16500,00;;azul (completa);completo;acima da meta: a tela não mostra percentual nem meta
+RS06;extremo;2400,00;0,01;0,01;0;vermelha;parcial;valor positivo minúsculo aparece como 0%
+RS07;validacao;2400,00;0,01|1000,00;1000,01;42;laranja;parcial;valor atual = soma dos locais
