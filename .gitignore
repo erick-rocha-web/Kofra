@@ -3,3 +3,5 @@ ferramentas/fase4/saida/
 *.log
 .DS_Store
 dist/
+.segredos.env
+*.local

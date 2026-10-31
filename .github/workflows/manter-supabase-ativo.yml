@@ -1,0 +1,30 @@
+# O plano Free do Supabase pausa o projeto depois de 7 dias sem atividade no banco.
+name: Manter Supabase ativo
+
+on:
+  schedule:
+    - cron: '17 9 */2 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  manter-ativo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Chamar manter_ativo
+        run: |
+          set -a
+          . ./.env
+          set +a
+          codigo=$(curl -sS -o resposta.txt -w '%{http_code}' -X POST \
+            "$VITE_SUPABASE_URL/rest/v1/rpc/manter_ativo" \
+            -H "apikey: $VITE_SUPABASE_PUBLISHABLE_KEY" \
+            -H 'Content-Type: application/json' \
+            -d '{}')
+          cat resposta.txt
+          echo
+          test "$codigo" = "200"
