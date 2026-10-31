@@ -1,4 +1,4 @@
-calculo;caso;campo;referencia;kofra;igual;nota
+calculo;caso;campo;referencia;pila;igual;nota
 Saldo do mês;Set/2026;saldo;R$ 13.500,00;R$ 13.500,00;sim;
 Saldo do mês;Set/2026;despesas;R$ 500,00;R$ 500,00;sim;
 Investir;Set/2026;investir;R$ 0,00;R$ 0,00;sim;
@@ -81,7 +81,7 @@ Rendimento;Fev/2027 · carteira;rendimento (%);-5,3;-5,3;sim;
 Rendimento;Fev/2027 · TESTE KOFRA CDB;rendimento (R$);−R$ 123,46;−R$ 123,46;sim;
 Rendimento;Fev/2027 · TESTE KOFRA CDB;rendimento (%);-1,2;-1,2;sim;
 Visão geral;Mês atual (out);receita (valor);R$ 6.000,15;R$ 6.000,15;sim;
-Visão geral;Mês atual (out);receita (variação);"""Na média do costume"" (a referência não mostra número)";−R$ 7.999,85;NÃO;"DIFERENÇA: o Kofra mostra a variação real (−R$ 7.999,85, −57,1%); regra da referência NÃO CONFIRMADA"
+Visão geral;Mês atual (out);receita (variação);"""Na média do costume"" (a referência não mostra número)";−R$ 7.999,85;NÃO;"DIFERENÇA: o Pila mostra a variação real (−R$ 7.999,85, −57,1%); regra da referência NÃO CONFIRMADA"
 Visão geral;Mês atual (out);gastos (valor);R$ 2.549,99;R$ 2.549,99;sim;
 Visão geral;Mês atual (out);gastos (variação);R$ 2.049,99;R$ 2.049,99;sim;
 Visão geral;Mês atual (out);patrimonio (valor);R$ 48.983,50;R$ 48.983,50;sim;
@@ -156,7 +156,7 @@ Progresso da reserva;R$ 2.400,00;estado;completo;completo;sim;
 Progresso da reserva;R$ 2.400,00;% exibido;100%;100%;sim;
 Progresso da reserva;R$ 3.600,00;valor guardado;R$ 3.600,00;R$ 3.600,00;sim;
 Progresso da reserva;R$ 3.600,00;estado;completo;completo;sim;
-Progresso da reserva;R$ 3.600,00;% exibido;— (estado completo, sem número);150%;NÃO;"DECISÃO KOFRA: mostra o percentual real (150%) junto do estado ""Cobertura total""; a referência mostra só ""100% protegido"""
+Progresso da reserva;R$ 3.600,00;% exibido;— (estado completo, sem número);150%;NÃO;"DECISÃO PILA: mostra o percentual real (150%) junto do estado ""Cobertura total""; a referência mostra só ""100% protegido"""
 Meta da reserva;hoje: Blindado × R$ 200,00;meta;R$ 2.400,00;R$ 2.400,00;sim;
 Meta da reserva;Fase 2: Blindado × R$ 500,00;meta;R$ 6.000,00;R$ 6.000,00;sim;
 Meta da reserva;Fase 2: Básico × R$ 2.500,00;meta;R$ 15.000,00;R$ 15.000,00;sim;

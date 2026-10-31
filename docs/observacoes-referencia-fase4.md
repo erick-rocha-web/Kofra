@@ -98,7 +98,7 @@ Regra real: cada aba mostra só os seus lançamentos (Receita por tipo de renda;
 ## Reserva — meta fixa em R$ 2.400,00 (Blindado × 200,00: configuração do usuário, NÃO alterada)
 - Tentativa de mudar nível/custo para medir a meta: BLOQUEADA pelo próprio ambiente (escrita em dado que não é de teste). Cancelei; nada mudou.
 - Movimentos no local de teste "TESTE KOFRA Reserva 2" (aportes/saque, todos hoje):
-  - início: locais 0,01 + 1.000,00 = 1.000,01 → 42% · texto "VOCÊ ESTÁ MELHOR QUE 80% DOS BRASILEIROS!" (estatística sem fonte; o Kofra não usa)
+  - início: locais 0,01 + 1.000,00 = 1.000,01 → 42% · texto "VOCÊ ESTÁ MELHOR QUE 80% DOS BRASILEIROS!" (estatística sem fonte; o Pila não usa)
   - +199,99 → 1.200,00 → 50%
   - +1.188,00 → 2.388,00 → mostra 100% · "FALTA POUCO PARA DORMIR TRANQUILO, NÃO PARE AGORA!" (99,5% ainda incompleta)
   - +12,00 → 2.400,00 → "PARABÉNS, VOCÊ ESTÁ 100% PROTEGIDO" · "Reserva completa. Respira fundo." (sem número de %)

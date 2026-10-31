@@ -45,8 +45,8 @@ export function obterSample(): Promise<SampleFn | null> {
 /* ───────────── O que o Claude lê ───────────── */
 
 export const INSTRUCOES = [
-  'Você é o assistente do Kofra, um app pessoal de finanças. Fale em português do Brasil, de forma curta, direta e gentil.',
-  'Use apenas os dados do Kofra que vêm a seguir. Não invente números nem estatísticas; se algo não estiver nos dados, diga que não sabe.',
+  'Você é o assistente do Pila, um app pessoal de finanças. Fale em português do Brasil, de forma curta, direta e gentil.',
+  'Use apenas os dados do Pila que vêm a seguir. Não invente números nem estatísticas; se algo não estiver nos dados, diga que não sabe.',
   'Não recomende ativos específicos para comprar ou vender: dê orientações gerais de organização financeira e lembre que não é consultoria.',
   'Escreva valores como R$ 1.234,56. Prefira respostas com até 6 frases ou uma lista curta.',
   'Quando a pessoa pedir para registrar um lançamento (gasto, receita, compra parcelada), chame a ferramenta proporLancamento uma vez por lançamento e avise que ele aparece na conversa para ela confirmar. Nunca diga que já foi registrado.',
@@ -143,7 +143,7 @@ export const ESQUEMA_PROPOSTA = {
     descricao: { type: 'string', description: 'descrição curta, ex.: "Mercado"' },
     valor: { type: 'number', description: 'valor total em reais, ex.: 52.9' },
     data: { type: 'string', description: 'data no formato AAAA-MM-DD; use a data de hoje se não for dita' },
-    categoria: { type: 'string', description: 'nome de uma categoria existente do Kofra' },
+    categoria: { type: 'string', description: 'nome de uma categoria existente do Pila' },
     parcelas: { type: 'number', description: 'número de parcelas para compra parcelada (1 se à vista)' },
     recorrente: { type: 'boolean', description: 'true se repete todo mês (receita fixa ou despesa fixa)' },
   },

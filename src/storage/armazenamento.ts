@@ -11,7 +11,9 @@ export interface Armazenamento {
   apagarTudo(): Promise<void>;
 }
 
-const BANCO = 'kofra';
+const BANCO = 'pila';
+// Nome do banco até 29/10/2026, quando o app se chamava Kofra.
+const BANCO_ANTIGO = 'kofra';
 const LOJA = 'dados';
 const CHAVE = 'principal';
 
@@ -31,6 +33,36 @@ function abrirBanco(): Promise<IDBDatabase> {
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error ?? new Error('Não foi possível abrir o IndexedDB'));
     req.onblocked = () => reject(new Error('IndexedDB bloqueado'));
+  });
+}
+
+/** Abre o banco antigo só se ele já existir; sem isso, abrir criaria um banco vazio. */
+function abrirBancoAntigo(): Promise<IDBDatabase | null> {
+  return new Promise((resolve) => {
+    let req: IDBOpenDBRequest;
+    try {
+      req = indexedDB.open(BANCO_ANTIGO);
+    } catch {
+      resolve(null);
+      return;
+    }
+    req.onupgradeneeded = () => req.transaction?.abort();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => resolve(null);
+    req.onblocked = () => resolve(null);
+  });
+}
+
+function apagarBanco(nome: string): Promise<void> {
+  return new Promise((resolve) => {
+    try {
+      const req = indexedDB.deleteDatabase(nome);
+      req.onsuccess = () => resolve();
+      req.onerror = () => resolve();
+      req.onblocked = () => resolve();
+    } catch {
+      resolve();
+    }
   });
 }
 
@@ -63,7 +95,28 @@ class ArmazenamentoIndexedDB implements Armazenamento {
 
   async apagarTudo(): Promise<void> {
     await this.transacao('readwrite', (s) => s.delete(CHAVE));
+    await apagarBanco(BANCO_ANTIGO);
   }
+}
+
+/** Traz os dados do banco antigo para o novo. O antigo só é apagado depois de conferir a cópia. */
+async function migrarBancoAntigo(novo: Armazenamento): Promise<void> {
+  if (await novo.carregar()) return;
+  const antigo = await abrirBancoAntigo();
+  if (!antigo) return;
+  let podeApagar = false;
+  try {
+    const dados = await new ArmazenamentoIndexedDB(antigo).carregar();
+    if (dados) {
+      await novo.salvar(dados);
+      podeApagar = JSON.stringify(await novo.carregar()) === JSON.stringify(dados);
+    } else {
+      podeApagar = true;
+    }
+  } finally {
+    antigo.close();
+  }
+  if (podeApagar) await apagarBanco(BANCO_ANTIGO);
 }
 
 class ArmazenamentoMemoria implements Armazenamento {
@@ -90,6 +143,10 @@ export async function criarArmazenamento(): Promise<Armazenamento> {
     ]);
     const a = new ArmazenamentoIndexedDB(db);
     await a.carregar(); // confirma que leitura funciona
+    await Promise.race([
+      migrarBancoAntigo(a).catch(() => undefined),
+      new Promise<void>((res) => setTimeout(res, 4000)),
+    ]);
     return a;
   } catch {
     return new ArmazenamentoMemoria();

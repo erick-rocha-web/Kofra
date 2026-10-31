@@ -27,6 +27,6 @@ if (!titulo || !estilos.length || !scripts.length || !corpo.includes('id="raiz"'
 }
 
 const saida = [titulo, metaLados, ...fontes, ...estilos, corpo, ...scripts].filter(Boolean).join('\n');
-writeFileSync(join(raiz, 'dist/kofra-artifact.html'), saida + '\n');
+writeFileSync(join(raiz, 'dist/pila-artifact.html'), saida + '\n');
 const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
-console.log(`dist/index.html (${kb(html.length)}) → dist/kofra-artifact.html (${kb(saida.length)})`);
+console.log(`dist/index.html (${kb(html.length)}) → dist/pila-artifact.html (${kb(saida.length)})`);

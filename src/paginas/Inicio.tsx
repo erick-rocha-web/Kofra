@@ -245,7 +245,7 @@ function ModalPersonalizar({
       aberto={aberto}
       aoFechar={aoFechar}
       titulo="Escolher o destaque do Início"
-      subtitulo="O número que aparece grande quando você abre o Kofra."
+      subtitulo="O número que aparece grande quando você abre o Pila."
       rodape={
         <>
           <Botao variante="secundario" onClick={aoFechar}>
@@ -333,7 +333,7 @@ export function Inicio() {
               <h2 id="primeiros-passos" className="f-titulo text-[17px]">
                 Primeiros passos
               </h2>
-              <p className="mt-1 text-[13.5px] text-suave">Três cadastros e o Kofra já mostra o seu mês inteiro.</p>
+              <p className="mt-1 text-[13.5px] text-suave">Três cadastros e o Pila já mostra o seu mês inteiro.</p>
             </div>
             <ol className="grid grid-cols-1 gap-2 md:grid-cols-3">
               {[
@@ -375,7 +375,7 @@ export function Inicio() {
         aoFechar={() => setExemplo(false)}
         titulo="Carregar dados de exemplo?"
         rotuloConfirmar="Carregar exemplo"
-        texto="O Kofra vai mostrar números fictícios em todas as telas, com uma faixa avisando. Quando quiser começar de verdade, é só apagar os exemplos."
+        texto="O Pila vai mostrar números fictícios em todas as telas, com uma faixa avisando. Quando quiser começar de verdade, é só apagar os exemplos."
         aoConfirmar={() => {
           const ex = gerarExemplo();
           const c = loja.obterDados().config;

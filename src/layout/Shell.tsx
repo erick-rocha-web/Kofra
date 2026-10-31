@@ -36,7 +36,7 @@ function DialogoSair({ aberto, aoFechar }: { aberto: boolean; aoFechar: () => vo
       }
     >
       <div className="flex flex-col gap-3 text-[14px] leading-[21px] text-suave">
-        <p>Esta versão do Kofra ainda não tem conta com login: seus dados ficam guardados só neste navegador.</p>
+        <p>Esta versão do Pila ainda não tem conta com login: seus dados ficam guardados só neste navegador.</p>
         <p>
           Para levar tudo para outro aparelho, exporte um backup em <strong className="text-texto">Configurações → Dados</strong> e
           importe lá. A conta com login e sincronização está no plano da versão na nuvem.
@@ -81,7 +81,7 @@ function BarraLateral({ aoSair }: { aoSair: () => void }) {
       className="fixed inset-y-0 left-0 z-40 hidden w-[248px] flex-col gap-[22px] border-r border-borda bg-side pb-4 pr-3.5 pt-[22px] lg:flex"
       style={{ paddingLeft: 'calc(14px + env(safe-area-inset-left, 0px))' }}
     >
-      <button type="button" onClick={() => navegar('inicio')} className="flex h-9 items-center px-2" aria-label="Kofra, ir para o início">
+      <button type="button" onClick={() => navegar('inicio')} className="flex h-9 items-center px-2" aria-label="Pila, ir para o início">
         <Logo />
       </button>
       <ul className="rolagem-fina -mx-1 flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto px-1">

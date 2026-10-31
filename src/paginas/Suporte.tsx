@@ -10,15 +10,15 @@ import { Modal } from '../ui/Modal';
 const PERGUNTAS: { p: string; r: string }[] = [
   {
     p: 'Onde ficam os meus dados?',
-    r: 'No armazenamento deste navegador, neste aparelho. O Kofra não tem servidor: nada sai daqui, a não ser quando você exporta um backup ou usa o Assistente.',
+    r: 'No armazenamento deste navegador, neste aparelho. O Pila não tem servidor: nada sai daqui, a não ser quando você exporta um backup ou usa o Assistente.',
   },
   {
-    p: 'Como uso o Kofra em outro aparelho?',
-    r: 'Em Configurações → Dados, exporte um backup (arquivo .json). No outro aparelho, abra o Kofra e importe esse arquivo. A sincronização automática chega com a versão na nuvem.',
+    p: 'Como uso o Pila em outro aparelho?',
+    r: 'Em Configurações → Dados, exporte um backup (arquivo .json). No outro aparelho, abra o Pila e importe esse arquivo. A sincronização automática chega com a versão na nuvem.',
   },
   {
     p: 'Com que frequência devo fazer backup?',
-    r: 'Uma vez por mês, e sempre antes de limpar os dados do navegador ou trocar de aparelho. Limpar o navegador apaga os dados do Kofra.',
+    r: 'Uma vez por mês, e sempre antes de limpar os dados do navegador ou trocar de aparelho. Limpar o navegador apaga os dados do Pila.',
   },
   {
     p: 'Como funciona o “Investir” do Orçamento?',
@@ -73,7 +73,7 @@ function ModalContatos({ aberto, aoFechar }: { aberto: boolean; aoFechar: () => 
       aberto={aberto}
       aoFechar={aoFechar}
       titulo="Contatos de suporte"
-      subtitulo="Quem responde dúvidas sobre este Kofra? Preencha o WhatsApp e o e-mail."
+      subtitulo="Quem responde dúvidas sobre este Pila? Preencha o WhatsApp e o e-mail."
       largura="sm"
       rodape={
         <>

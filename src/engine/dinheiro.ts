@@ -1,5 +1,5 @@
 /**
- * Dinheiro no Kofra é sempre um número inteiro de centavos.
+ * Dinheiro no Pila é sempre um número inteiro de centavos.
  * Toda divisão que pode gerar fração de centavo passa por `dividirArredondando`,
  * que arredonda "meio para cima" (para longe do zero), a regra confirmada na Fase 2:
  * 30% de 6.000,15 = 1.800,045 → 1.800,05.

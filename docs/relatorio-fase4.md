@@ -1,4 +1,4 @@
-# Kofra — Relatório da Fase 4 (verificação)
+# Pila — Relatório da Fase 4 (verificação)
 
 28/10/2026 · tudo rodado sobre o build final (`dist/`), na interface real do app, sem atalhos no código.
 
@@ -8,7 +8,7 @@
 |---|---|
 | Testes automáticos do engine (Vitest) | **161 de 161** (135 das Fases 2–3 + 26 casos novos da Fase 4) |
 | Verificador das fórmulas da Fase 2 (Python) | **630 de 630** checagens |
-| Prova cruzada referência × Kofra | **17 cálculos · 105 casos novos · 235 de 237 checagens iguais**; as 2 diferenças estão explicadas na seção 2.3 |
+| Prova cruzada referência × Pila | **17 cálculos · 105 casos novos · 235 de 237 checagens iguais**; as 2 diferenças estão explicadas na seção 2.3 |
 | Uso real (do zero, só pela interface) | **22 de 22 passos** sem erro e sem mensagem de erro no console (3 rodadas seguidas) |
 | Largura de celular (320, 360 e 390 px) | **228 telas e diálogos** sem rolagem lateral e sem nada saindo da tela |
 | Originalidade | nome, logo, imagens e código da referência: **nenhum**; textos: **78 trechos de texto reescritos**, sobraram só termos genéricos |
@@ -31,13 +31,13 @@
 - `python3 ferramentas/verificar_formulas.py` → **630 de 630** (relatório em `testes/relatorio-verificacao.md`). O arquivo `orcamento_categorias.csv` da Fase 2 foi corrigido (seção 2.3) e continua passando.
 - `npm run build` faz a checagem de tipos do TypeScript antes de gerar o app: sem erros.
 
-## 2. Prova cruzada (referência × Kofra)
+## 2. Prova cruzada (referência × Pila)
 
 ### 2.1 Como foi feita
 
 1. **Referência:** naveguei como usuário comum, em ritmo normal, sem chamar a API, e anotei o que cada tela mostrou. Calculadoras, prévias de formulário e filtros foram só lidos. Para ter casos novos de verdade, editei e criei **apenas dados de teste "TESTE KOFRA"** (lista na seção 2.5). Uma alteração na configuração real da reserva foi bloqueada pelo próprio ambiente; cancelei e nada mudou (seção 2.4).
-2. **Kofra:** montei réplicas dos mesmos dados usando as próprias ações do app (`ferramentas/fase4/montar_sementes.ts`), carreguei no app servido localmente e li os números **na tela** com o Playwright (`ferramentas/fase4/conferencia.cjs`). Calculadoras e prévias foram preenchidas campo a campo, como uma pessoa faria.
-3. **Comparação:** igualdade exata em centavos e nos percentuais exibidos. Onde a referência mostra reais inteiros (tela de Patrimônio, lista de Investimentos, card da meta), comparei o valor do Kofra arredondado para reais.
+2. **Pila:** montei réplicas dos mesmos dados usando as próprias ações do app (`ferramentas/fase4/montar_sementes.ts`), carreguei no app servido localmente e li os números **na tela** com o Playwright (`ferramentas/fase4/conferencia.cjs`). Calculadoras e prévias foram preenchidas campo a campo, como uma pessoa faria.
+3. **Comparação:** igualdade exata em centavos e nos percentuais exibidos. Onde a referência mostra reais inteiros (tela de Patrimônio, lista de Investimentos, card da meta), comparei o valor do Pila arredondado para reais.
 
 Resultado linha a linha: `testes/conferencia/resultado.csv`. Anotações da referência: `docs/observacoes-referencia-fase4.md`.
 
@@ -75,15 +75,15 @@ Casos que valem destacar, todos iguais nos dois lados:
 
 ### 2.3 Diferenças encontradas
 
-| Onde | Referência | Kofra | O que foi feito |
+| Onde | Referência | Pila | O que foi feito |
 |---|---|---|---|
 | Gráfico por categoria (achado da Fase 4) | cada aba só com os seus itens | juntava fixas e variáveis | **Corrigido.** O "68% / 32%" da Fase 2 era da aba Variável (Mercado 700 e Vestuário 333,34), não "Aluguel + Mercado"; os dois pares dão 68/32 por coincidência. Conferi no print da Fase 2. |
-| Visão geral, receita de out/2026 | "Na média do costume", sem número | −R$ 7.999,85 (−57,1%) | **NÃO CONFIRMADO.** A mesma tela mostrou "R$ 1.000,00 a menos" em ago/2026, então não é "toda queda". O Kofra mantém a variação real (decisão do CP2: R$ e % juntos). |
-| Reserva acima da meta (R$ 3.600,00 de R$ 2.400,00) | "100% protegido", sem número | "Cobertura total" + 150% | **DECISÃO KOFRA**, mantida: mostra quanto passou da meta. |
+| Visão geral, receita de out/2026 | "Na média do costume", sem número | −R$ 7.999,85 (−57,1%) | **NÃO CONFIRMADO.** A mesma tela mostrou "R$ 1.000,00 a menos" em ago/2026, então não é "toda queda". O Pila mantém a variação real (decisão do CP2: R$ e % juntos). |
+| Reserva acima da meta (R$ 3.600,00 de R$ 2.400,00) | "100% protegido", sem número | "Cobertura total" + 150% | **DECISÃO PILA**, mantida: mostra quanto passou da meta. |
 
 ### 2.4 Limitação: meta da reserva
 
-Para medir a meta com outros valores, era preciso mudar o nível e o custo da **sua** configuração de reserva (não é dado de teste). O ambiente bloqueou a gravação; cancelei o diálogo e conferi que tudo ficou como antes (Blindado, R$ 200,00, meta R$ 2.400,00). Por isso a meta da reserva tem 1 caso novo (R$ 2.400,00) e 2 casos da Fase 2 (R$ 6.000,00 e R$ 15.000,00), todos iguais no Kofra. A fórmula (custo × 6 ou × 12) segue confirmada.
+Para medir a meta com outros valores, era preciso mudar o nível e o custo da **sua** configuração de reserva (não é dado de teste). O ambiente bloqueou a gravação; cancelei o diálogo e conferi que tudo ficou como antes (Blindado, R$ 200,00, meta R$ 2.400,00). Por isso a meta da reserva tem 1 caso novo (R$ 2.400,00) e 2 casos da Fase 2 (R$ 6.000,00 e R$ 15.000,00), todos iguais no Pila. A fórmula (custo × 6 ou × 12) segue confirmada.
 
 ### 2.5 Dados de teste criados ou alterados na referência hoje
 
@@ -130,9 +130,9 @@ Um mês de uso começando com o app vazio, só pela interface (`ferramentas/fase
 
 ## 5. Originalidade
 
-**Nome, logo, imagens e código.** Busquei o nome da plataforma de referência em todo o projeto (código, testes, documentos e build): nenhuma ocorrência. O build não tem imagens embutidas; os ícones são Phosphor (licença MIT) e o logo é desenho próprio. O app não acessa nenhum endereço da referência. A estatística sem fonte ("melhor que 80% dos brasileiros") não aparece no Kofra.
+**Nome, logo, imagens e código.** Busquei o nome da plataforma de referência em todo o projeto (código, testes, documentos e build): nenhuma ocorrência. O build não tem imagens embutidas; os ícones são Phosphor (licença MIT) e o logo é desenho próprio. O app não acessa nenhum endereço da referência. A estatística sem fonte ("melhor que 80% dos brasileiros") não aparece no Pila.
 
-**Textos.** Comparei os 900 textos que o Kofra mostra (telas, diálogos, rótulos de acessibilidade e placeholders) e o código-fonte com o texto lido (OCR) de 453 prints da referência, procurando linhas e sequências de 3 a 5 palavras iguais. Reescrevi 78 trechos (rótulos, botões, títulos, placeholders e frases de ajuda) que coincidiam ou se pareciam com a referência, por exemplo:
+**Textos.** Comparei os 900 textos que o Pila mostra (telas, diálogos, rótulos de acessibilidade e placeholders) e o código-fonte com o texto lido (OCR) de 453 prints da referência, procurando linhas e sequências de 3 a 5 palavras iguais. Reescrevi 78 trechos (rótulos, botões, títulos, placeholders e frases de ajuda) que coincidiam ou se pareciam com a referência, por exemplo:
 
 | Antes (igual à referência) | Agora |
 |---|---|

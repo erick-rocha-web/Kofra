@@ -149,7 +149,7 @@ export function Assistente() {
       .conversa.slice(-13, -1)
       .map((m) => ({ role: m.papel, content: m.texto }));
     const entrada = [
-      { role: 'user' as const, content: `${INSTRUCOES}\n\nDADOS DO KOFRA\n${resumoParaAssistente(loja.obterDados(), hojeISO())}` },
+      { role: 'user' as const, content: `${INSTRUCOES}\n\nDADOS DO PILA\n${resumoParaAssistente(loja.obterDados(), hojeISO())}` },
       ...historico,
       { role: 'user' as const, content: q },
     ];
@@ -161,7 +161,7 @@ export function Assistente() {
     const ferramenta: SampleTool = {
       name: 'proporLancamento',
       description:
-        'Cria uma sugestão de lançamento no Orçamento do Kofra para a pessoa confirmar ou descartar. Não registra nada sozinha. Retorna o status da sugestão.',
+        'Cria uma sugestão de lançamento no Orçamento do Pila para a pessoa confirmar ou descartar. Não registra nada sozinha. Retorna o status da sugestão.',
       inputSchema: ESQUEMA_PROPOSTA,
       execute: (input) => {
         const valor = Math.round(Number(input.valor) * 100);
@@ -228,7 +228,7 @@ export function Assistente() {
             titulo={estado === 'indisponivel' ? 'O Assistente chega em breve aqui' : 'O Assistente está sem permissão'}
             texto={
               estado === 'indisponivel'
-                ? 'Ele funciona quando o Kofra está aberto no claude.ai, usando a sua conta: responde perguntas sobre os seus números e sugere lançamentos para você confirmar. Neste endereço ele ainda não está disponível.'
+                ? 'Ele funciona quando o Pila está aberto no claude.ai, usando a sua conta: responde perguntas sobre os seus números e sugere lançamentos para você confirmar. Neste endereço ele ainda não está disponível.'
                 : 'Você (ou a sua organização) não autorizou este app a usar o Claude. Dá para mudar isso no menu de permissões do artefato no claude.ai e abrir esta tela de novo.'
             }
             acoes={<Botao onClick={() => navegar('suporte')}>Ver perguntas frequentes</Botao>}
@@ -270,7 +270,7 @@ export function Assistente() {
               <div>
                 <p className="f-titulo text-[19px]">Pergunte sobre o seu dinheiro</p>
                 <p className="mx-auto mt-1 max-w-[46ch] text-[14px] text-suave">
-                  O assistente lê os números do Kofra e responde em segundos. Também pode sugerir lançamentos, que só entram quando você confirma.
+                  O assistente lê os números do Pila e responde em segundos. Também pode sugerir lançamentos, que só entram quando você confirma.
                 </p>
               </div>
               <div className="flex flex-wrap justify-center gap-2">

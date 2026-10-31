@@ -1,8 +1,10 @@
-# Kofra
+# Pila
 
 App pessoal de finanças, em português do Brasil: orçamento do mês, patrimônio, investimentos, reserva de emergência, metas, visão geral, calculadoras, aulas curtas e um assistente que conversa sobre os seus números.
 
 Tudo roda no navegador. Os dados ficam guardados no próprio aparelho (IndexedDB) e saem só quando você exporta um backup ou usa o Assistente dentro do claude.ai. A versão com login e sincronização entre aparelhos está no `docs/roadmap.md`.
+
+> **Nome novo.** Até 29/10/2026 o app se chamava Kofra. No mesmo endereço, os dados guardados com o nome antigo passam sozinhos para o Pila na primeira abertura, e os backups antigos (`kofra-backup-….json`) continuam sendo aceitos. Os registros de teste criados na plataforma de referência mantêm o prefixo "TESTE KOFRA", porque é assim que eles existem lá.
 
 ## O que tem
 
@@ -18,7 +20,7 @@ Tudo roda no navegador. Os dados ficam guardados no próprio aparelho (IndexedDB
 | Metas | Valor, prazo, onde o dinheiro fica (texto ou investimentos vinculados), guardar ou tirar, sugestão de quanto separar por mês |
 | Calculadoras | Juros compostos (com tabela mês a mês) e primeiro milhão (tempo ou valor por mês) |
 | Aprender e Suporte | Aulas editáveis, perguntas frequentes e contatos de suporte |
-| Assistente | Usa o Claude da sua conta quando o Kofra está aberto no claude.ai; sugere lançamentos que só entram depois que você confirma |
+| Assistente | Usa o Claude da sua conta quando o Pila está aberto no claude.ai; sugere lançamentos que só entram depois que você confirma |
 | Configurações | Nome, tema claro/escuro/sistema, backup (exportar, importar ou colar), dados de exemplo e apagar tudo |
 
 Em todas as telas, o ícone de olho esconde os valores (útil em público). Os cálculos seguem as regras observadas e testadas na plataforma de referência: `docs/especificacao-calculos.md`.
@@ -30,12 +32,12 @@ Precisa de Node.js 18 ou mais novo.
 ```bash
 npm install
 npm run dev        # abre em http://localhost:5173
-npm test           # 161 testes do engine
-npm run build      # gera dist/index.html (arquivo único) e dist/kofra-artifact.html
+npm test           # 165 testes (cálculos e backup)
+npm run build      # gera dist/index.html (arquivo único) e dist/pila-artifact.html
 ```
 
 - `dist/index.html` é o app inteiro num arquivo só. Dá para abrir direto no navegador (Chrome, Edge ou Firefox) ou hospedar em qualquer servidor estático.
-- `dist/kofra-artifact.html` é a mesma coisa no formato de página do claude.ai (é a versão publicada).
+- `dist/pila-artifact.html` é a mesma coisa no formato de página do claude.ai (é a versão publicada).
 - `python3 ferramentas/verificar_formulas.py` recalcula as 630 checagens da Fase 2 a partir dos CSVs de `testes/`.
 
 ## Como o código está organizado
@@ -58,8 +60,8 @@ Trocar o armazenamento por uma API no futuro: a interface `Armazenamento` em `sr
 
 ## Documentos
 
-- `docs/especificacao-calculos.md` — todas as fórmulas, com status CONFIRMADO, NÃO CONFIRMADO ou DECISÃO KOFRA
-- `docs/nao-confirmado.md` — o que não deu para confirmar e o que o Kofra faz por enquanto
+- `docs/especificacao-calculos.md` — todas as fórmulas, com status CONFIRMADO, NÃO CONFIRMADO ou DECISÃO PILA
+- `docs/nao-confirmado.md` — o que não deu para confirmar e o que o Pila faz por enquanto
 - `docs/relatorio-fase4.md` — verificação final (testes, prova cruzada, uso real, celular, originalidade, acessibilidade)
 - `docs/roadmap.md` — próximos passos, incluindo a versão na nuvem
 - `docs/mapa-complementar.md` — o que a planta não detalhava e como ficou

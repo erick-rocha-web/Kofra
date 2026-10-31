@@ -1,4 +1,4 @@
-/** Marca do Kofra: cofre arredondado com fechadura + palavra "kofra" expandida. */
+/** Marca do Pila: cofre arredondado com fechadura + palavra "pila" expandida. */
 export function Logo({ tamanho = 30, comNome = true }: { tamanho?: number; comNome?: boolean }) {
   return (
     <span className="inline-flex items-center gap-2.5">
@@ -12,7 +12,7 @@ export function Logo({ tamanho = 30, comNome = true }: { tamanho?: number; comNo
           className="text-texto"
           style={{ fontSize: Math.round(tamanho * 0.7), lineHeight: 1, fontWeight: 700, fontStretch: '125%', letterSpacing: '-0.01em' }}
         >
-          kofra
+          pila
         </span>
       )}
     </span>

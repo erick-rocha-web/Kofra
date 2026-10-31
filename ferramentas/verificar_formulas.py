@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Kofra — verificação das fórmulas da Fase 2.
+"""Pila — verificação das fórmulas da Fase 2.
 
 Lê cada CSV de testes/ (observações feitas na referência), recalcula com as
 fórmulas descritas em docs/especificacao-calculos.md e compara.
@@ -256,7 +256,7 @@ def reserva_percentual():
         atual = sum((dinheiro(x) for x in r["locais"].split("|") if x.strip()), D(0))
         estado = "zero" if atual == 0 else ("completo" if atual >= meta else "parcial")
         cmp_dinheiro(arq, r["id"], "valor_atual", r["obs_valor_atual"], atual)
-        cmp_exato(arq, r["id"], "estado_kofra", r["estado_kofra"], estado)
+        cmp_exato(arq, r["id"], "estado_pila", r["estado_pila"], estado)
         if estado == "completo":
             # a referência não exibe percentual quando a reserva está completa
             cmp_exato(arq, r["id"], "percentual_oculto", "sim", "sim" if r["obs_percentual"] == "" else "não")

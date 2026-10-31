@@ -1,19 +1,19 @@
-// Fase 4 — prova cruzada: cada caso observado hoje na referência é refeito no Kofra (interface real,
+// Fase 4 — prova cruzada: cada caso observado hoje na referência é refeito no Pila (interface real,
 // build servido localmente) e os números exibidos são comparados.
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const h = require('./harness.cjs');
 
-const R = []; // { calculo, caso, campo, referencia, kofra, ok, nota }
+const R = []; // { calculo, caso, campo, referencia, pila, ok, nota }
 const brl = (c) => (c === null || c === undefined ? '—' : (c < 0 ? '−' : '') + 'R$ ' + (Math.abs(c) / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2 }));
-function reg(calculo, caso, campo, referencia, kofra, ok, nota = '') {
-  R.push({ calculo, caso, campo, referencia: String(referencia), kofra: String(kofra), ok: !!ok, nota });
+function reg(calculo, caso, campo, referencia, pila, ok, nota = '') {
+  R.push({ calculo, caso, campo, referencia: String(referencia), pila: String(pila), ok: !!ok, nota });
 }
-/** dinheiro: ref em centavos; se a referência mostra reais inteiros, compara arredondando o valor do Kofra. */
-function regDinheiro(calculo, caso, campo, refCent, kofraCent, { inteiros = false, nota = '' } = {}) {
-  const ok = kofraCent !== null && (inteiros ? Math.round(kofraCent / 100) === Math.round(refCent / 100) : kofraCent === refCent);
-  reg(calculo, caso, campo, inteiros ? brl(refCent).replace(/,\d\d$/, '') : brl(refCent), brl(kofraCent), ok, nota);
+/** dinheiro: ref em centavos; se a referência mostra reais inteiros, compara arredondando o valor do Pila. */
+function regDinheiro(calculo, caso, campo, refCent, pilaCent, { inteiros = false, nota = '' } = {}) {
+  const ok = pilaCent !== null && (inteiros ? Math.round(pilaCent / 100) === Math.round(refCent / 100) : pilaCent === refCent);
+  reg(calculo, caso, campo, inteiros ? brl(refCent).replace(/,\d\d$/, '') : brl(refCent), brl(pilaCent), ok, nota);
 }
 const linhas = (t) => t.replace(/R\$\n/g, 'R$ ').split('\n').map((l) => l.trim()).filter(Boolean);
 const cent = (s) => h.centavos(s);
@@ -158,9 +158,9 @@ async function graficoDaAba(page, aba) {
       const pares = [];
       for (let j = i + 1; j + 1 < ls.length && /^\d+%$/.test(ls[j + 1]); j += 2) pares.push(`${ls[j]}:${ls[j + 1].replace('%', '')}`);
       const k = pares.join('|');
-      // o Kofra lista os 5 maiores; compara o que aparece
+      // o Pila lista os 5 maiores; compara o que aparece
       const refTop = compRef.split('|').slice(0, pares.length).join('|');
-      reg('Composição do patrimônio', nome, '% de cada item (lista "O que mais pesa")', compRef, k, k === refTop, pares.length < compRef.split('|').length ? `o Kofra mostra só os ${pares.length} maiores` : '');
+      reg('Composição do patrimônio', nome, '% de cada item (lista "O que mais pesa")', compRef, k, k === refTop, pares.length < compRef.split('|').length ? `o Pila mostra só os ${pares.length} maiores` : '');
     }
     if (grupoRef) {
       const itens = [];
@@ -240,7 +240,7 @@ async function graficoDaAba(page, aba) {
         varK = /abaixo/.test(sentido) ? -mag : mag;
       }
       if (varRef === 'NMC') {
-        reg('Visão geral', nome, `${chave} (variação)`, '"Na média do costume" (a referência não mostra número)', varK === null ? 'sem variação' : brl(varK), false, 'DIFERENÇA: o Kofra mostra a variação real (−R$ 7.999,85, −57,1%); regra da referência NÃO CONFIRMADA');
+        reg('Visão geral', nome, `${chave} (variação)`, '"Na média do costume" (a referência não mostra número)', varK === null ? 'sem variação' : brl(varK), false, 'DIFERENÇA: o Pila mostra a variação real (−R$ 7.999,85, −57,1%); regra da referência NÃO CONFIRMADA');
       } else if (varRef === null) {
         reg('Visão geral', nome, `${chave} (variação)`, 'sem período anterior', varK === null ? 'sem período anterior' : brl(varK), varK === null);
       } else {
@@ -285,7 +285,7 @@ async function graficoDaAba(page, aba) {
     const atual = cent(ls[ls.indexOf(pk) + 1] || '');
     regDinheiro('Progresso da reserva', brl(total), 'valor guardado', total, atual);
     reg('Progresso da reserva', brl(total), 'estado', estado, ek, ek === estado);
-    if (total === 360000) reg('Progresso da reserva', brl(total), '% exibido', pct, pk, false, 'DECISÃO KOFRA: mostra o percentual real (150%) junto do estado "Cobertura total"; a referência mostra só "100% protegido"');
+    if (total === 360000) reg('Progresso da reserva', brl(total), '% exibido', pct, pk, false, 'DECISÃO PILA: mostra o percentual real (150%) junto do estado "Cobertura total"; a referência mostra só "100% protegido"');
     else reg('Progresso da reserva', brl(total), '% exibido', pct, pk, pk === pct);
   }
   // Meta da reserva: 1 caso de hoje + 2 da Fase 2 (mudar a configuração real foi bloqueado)
@@ -416,6 +416,6 @@ async function graficoDaAba(page, aba) {
     if (x.ok) porCalc[x.calculo].ok++;
   }
   for (const [c, v] of Object.entries(porCalc)) console.log(`${c}: ${v.casos.size} casos · ${v.ok}/${v.total} checagens iguais`);
-  for (const x of R.filter((y) => !y.ok)) console.log('DIFERENTE', x.calculo, '|', x.caso, '|', x.campo, '| ref:', x.referencia, '| kofra:', x.kofra, x.nota ? '| ' + x.nota : '');
+  for (const x of R.filter((y) => !y.ok)) console.log('DIFERENTE', x.calculo, '|', x.caso, '|', x.campo, '| ref:', x.referencia, '| pila:', x.pila, x.nota ? '| ' + x.nota : '');
   console.log('erros de página:', erros);
 })();

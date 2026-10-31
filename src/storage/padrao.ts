@@ -55,7 +55,7 @@ export function aulasPadrao(): Aula[] {
         'Comece pelo custo essencial do mês: moradia, mercado, contas, transporte, saúde. Fica de fora o que dá para cortar numa fase apertada.',
         '- Renda estável (salário fixo): guarde 6 vezes esse custo.',
         '- Renda que varia (autônomo, comissão, empresa própria): guarde 12 vezes.',
-        'No Kofra esses são os níveis Básico e Blindado. Você escolhe o nível e o app calcula a meta.',
+        'No Pila esses são os níveis Básico e Blindado. Você escolhe o nível e o app calcula a meta.',
         '## Onde guardar',
         'Reserva precisa estar disponível rápido e não pode perder valor quando você mais precisar dela. Por isso ela costuma ficar em aplicações de baixo risco e resgate imediato, e não em ações ou em investimentos com prazo de carência.',
         '## Como montar sem sufoco',
@@ -71,7 +71,7 @@ export function aulasPadrao(): Aula[] {
       titulo: 'Orçamento em quatro números',
       resumo: 'Receita, despesas, investir e saldo: como ler o seu mês.',
       corpo: [
-        'O Orçamento do Kofra resume o mês em quatro números. Entender cada um ajuda a decidir para onde o dinheiro vai.',
+        'O Orçamento do Pila resume o mês em quatro números. Entender cada um ajuda a decidir para onde o dinheiro vai.',
         '## Receita',
         'Tudo o que entrou no mês: salário, trabalhos extras, outras entradas. Receitas que você ainda vai receber podem ser lançadas como previstas: elas aparecem em "a receber" e só contam quando você confirma o recebimento.',
         '## Despesas',

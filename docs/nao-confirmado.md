@@ -1,8 +1,8 @@
-# Kofra — O que não deu para confirmar (NÃO CONFIRMADO)
+# Pila — O que não deu para confirmar (NÃO CONFIRMADO)
 
-Pontos em que a plataforma de referência não mostrou a regra com segurança. Para cada um, o Kofra usa um comportamento provisório, escrito abaixo. Nenhum número ou estatística foi inventado: quando não havia observação, o Kofra mostra o dado real ou deixa o recurso de fora. Detalhes em `docs/especificacao-calculos.md` (seção 9).
+Pontos em que a plataforma de referência não mostrou a regra com segurança. Para cada um, o Pila usa um comportamento provisório, escrito abaixo. Nenhum número ou estatística foi inventado: quando não havia observação, o Pila mostra o dado real ou deixa o recurso de fora. Detalhes em `docs/especificacao-calculos.md` (seção 9).
 
-| # | Ponto | Como apareceu | O que o Kofra faz por enquanto |
+| # | Ponto | Como apareceu | O que o Pila faz por enquanto |
 |---|---|---|---|
 | 1 | Propagação do "Investir" ao alterar um mês que já tinha herdado o ajuste | Ajustar outubro para 30% levou novembro e dezembro junto; depois, mudar outubro para 20% não mudou novembro | Vale deste mês em diante até o próximo ajuste (decidido no CP2) |
 | 2 | Limites das faixas de mensagem da reserva | A referência tem 6 faixas de mensagem; os limites intermediários não foram medidos | Usa 3 estados (sem cobertura, parcial, total) com textos próprios |

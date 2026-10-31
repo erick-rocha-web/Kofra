@@ -1,6 +1,11 @@
-id;valor_inicial;valor_mensal;taxa;unidade_taxa;ref_tempo;ref_investido;ref_juros;ref_pct_investido;ref_pct_juros;descricao
-XPM1;0,00;2000,00;0,90;mensal;15 anos e 11 meses;382000,00;618000,00;38,2;61,8;sem valor inicial
-XPM2;50000,00;1500,00;11,00;anual;16 anos;338000,00;662000,00;33,8;66,2;anos exatos (sem meses)
-XPM3;250000,00;0,00;1,00;mensal;11 anos e 8 meses;250000,00;750000,00;25,0;75,0;sem aporte mensal
-XPM4;5000,00;750,00;8,00;anual;28 anos e 10 meses;264500,00;735500,00;26,5;73,6;empate em ,x5 nos dois percentuais (26,45 e 73,55)
-XPM5;100,00;100,00;0,50;mensal;65 anos e 8 meses;78900,00;921100,00;7,9;92,1;prazo muito longo
+id;papel;valor_inicial;valor_mensal;taxa;unidade_taxa;obs_tempo;obs_investido;obs_juros;obs_pct_investido;obs_pct_juros;obs_aviso;descricao
+PM01;base;10000,00;1000,00;1,00;mensal;19 anos e 4 meses;242000,00;758000,00;24,2;75,8;;
+PM02;variacao;0,00;5000,00;1,00;mensal;9 anos e 3 meses;555000,00;445000,00;;;;
+PM03;extremo;890000,00;0,00;1,00;mensal;1 ano;890000,00;110000,00;;;;
+PM04;extremo;900000,00;0,00;1,00;mensal;11 meses;900000,00;100000,00;;;;
+PM05;extremo;1000000,00;0,00;1,00;mensal;;;;;;valor inicial já atinge a meta;
+PM06;extremo;0,00;0,00;1,00;mensal;;;;;;inalcançável em até 100 anos;
+PM07;variacao;10000,00;1000,00;12,00;anual;20 anos;250000,00;750000,00;;;;
+PM08;validacao;10000,00;0,00;1,00;mensal;38 anos e 7 meses;10000,00;990000,00;1,0;99,0;;
+PM09;validacao;0,00;100,00;0,29;mensal;97 anos e 11 meses;117500,00;882500,00;11,8;88,3;;perto do limite de 100 anos (1.175 meses)
+PM10;extremo;0,00;100,00;0,28;mensal;;;;;;inalcançável em até 100 anos;precisaria de 1.205 meses

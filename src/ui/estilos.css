@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 /*
-  Kofra · direção Marinho
+  Pila · direção Marinho
   Layout: barra lateral fixa no computador; barra superior + navegação inferior no celular.
   Tokens: claro no :root; escuro pelo tema do sistema/visualizador; a escolha feita em
-  Configurações (data-kofra-tema) vence as duas.
+  Configurações (data-pila-tema) vence as duas.
 */
 :root {
   --bg: #f2f5fa;
@@ -142,8 +142,8 @@
   color-scheme: dark;
 }
 
-/* Escolha feita no próprio Kofra (vem depois para vencer as regras acima). */
-:root[data-kofra-tema='claro'] {
+/* Escolha feita no próprio Pila (vem depois para vencer as regras acima). */
+:root[data-pila-tema='claro'] {
   --bg: #f2f5fa;
   --side: #f9fbfe;
   --surface: #ffffff;
@@ -187,7 +187,7 @@
   color-scheme: light;
 }
 
-:root[data-kofra-tema='escuro'] {
+:root[data-pila-tema='escuro'] {
   --bg: #070b14;
   --side: #0a0f1c;
   --surface: #0e1526;
@@ -384,7 +384,7 @@
   }
 }
 
-@keyframes kofra-entrar {
+@keyframes pila-entrar {
   from {
     opacity: 0;
     transform: translateY(8px);
@@ -395,7 +395,7 @@
   }
 }
 
-@keyframes kofra-folha {
+@keyframes pila-folha {
   from {
     transform: translateY(100%);
   }
@@ -404,7 +404,7 @@
   }
 }
 
-@keyframes kofra-fade {
+@keyframes pila-fade {
   from {
     opacity: 0;
   }
@@ -414,19 +414,19 @@
 }
 
 .anima-entrar {
-  animation: kofra-entrar 0.22s ease-out both;
+  animation: pila-entrar 0.22s ease-out both;
 }
 .anima-folha {
-  animation: kofra-folha 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pila-folha 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .anima-fade {
-  animation: kofra-fade 0.18s ease-out both;
+  animation: pila-fade 0.18s ease-out both;
 }
 .anima-modal {
-  animation: kofra-folha 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pila-folha 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 @media (min-width: 640px) {
   .anima-modal {
-    animation: kofra-entrar 0.2s ease-out both;
+    animation: pila-entrar 0.2s ease-out both;
   }
 }

@@ -1,9 +1,9 @@
 {
-  "name": "kofra",
+  "name": "pila",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Kofra — app de finanças pessoais",
+  "description": "Pila — app de finanças pessoais",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit -p tsconfig.json && vite build && node scripts/artifact.mjs",

@@ -160,7 +160,7 @@ export type ResultadoAporte =
 
 /**
  * Aporte mensal para chegar a R$ 1 milhão no prazo: PMT = (meta − PV·(1+i)^n)·i ÷ ((1+i)^n − 1).
- * O investido usa o aporte sem arredondar (CONFIRMADO). Taxa zero: (meta − PV) ÷ n (DECISÃO KOFRA).
+ * O investido usa o aporte sem arredondar (CONFIRMADO). Taxa zero: (meta − PV) ÷ n (DECISÃO PILA).
  */
 export function aporteParaMilhao(e: EntradaAporte): ResultadoAporte {
   const n = e.unidadePrazo === 'meses' ? Math.round(e.prazo) : Math.round(e.prazo * 12);

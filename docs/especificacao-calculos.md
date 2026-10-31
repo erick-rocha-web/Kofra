@@ -1,16 +1,16 @@
-# Kofra — Especificação dos cálculos
+# Pila — Especificação dos cálculos
 
 Fase 2 · observações feitas na plataforma de referência em 27/10/2026 · 19 arquivos de teste · 630 checagens · diferença máxima R$ 0,00
 
-Fase 4 · prova cruzada em 28/10/2026 · 105 casos novos refeitos na interface do Kofra · 235 de 237 checagens iguais (as 2 diferenças estão explicadas abaixo) · 1 correção (gráfico por categoria, seção 1.6) · detalhes em `docs/relatorio-fase4.md`
+Fase 4 · prova cruzada em 28/10/2026 · 105 casos novos refeitos na interface do Pila · 235 de 237 checagens iguais (as 2 diferenças estão explicadas abaixo) · 1 correção (gráfico por categoria, seção 1.6) · detalhes em `docs/relatorio-fase4.md`
 
 ## Como ler
 
 | Marca | Significado |
 |---|---|
 | **CONFIRMADO** | Regra observada na referência e reproduzida pela fórmula abaixo em todos os casos de teste (tolerância R$ 0,01; diferença obtida R$ 0,00). |
-| **NÃO CONFIRMADO** | Não deu para observar com segurança. O Kofra usa a regra indicada como provisória, e ela entra na lista do fim. |
-| **DECISÃO KOFRA** | O Kofra faz diferente da referência de propósito (pedido da planta ou ajuste de clareza). |
+| **NÃO CONFIRMADO** | Não deu para observar com segurança. O Pila usa a regra indicada como provisória, e ela entra na lista do fim. |
+| **DECISÃO PILA** | O Pila faz diferente da referência de propósito (pedido da planta ou ajuste de clareza). |
 
 Os casos ficam em `testes/*.csv` (separador `;`, vírgula decimal, colunas `obs_*` = o que a referência mostrou). `ferramentas/verificar_formulas.py` recalcula tudo e gera `testes/relatorio-verificacao.md`. Na Fase 3 os mesmos CSVs alimentam os testes Vitest do `engine/`.
 
@@ -20,7 +20,7 @@ Os casos ficam em `testes/*.csv` (separador `;`, vírgula decimal, colunas `obs_
 - **Arredondamento: meio para cima.** 30% de 6.000,15 = 1.800,045 → **1.800,05** (o arredondamento "bancário" daria 1.800,04 e foi descartado pelos testes). Vale também para percentuais: 41,5% → 42%; 11,75% → 11,8%.
 - **Percentuais exibidos:** inteiros na reserva, na composição e nos gráficos de categoria; uma casa decimal no rendimento e nas calculadoras.
 - **Mês de competência:** tudo é apurado por mês (ano + mês). "Mês atual" = mês do relógio do aparelho.
-- **Formato:** pt-BR (R$ 1.234,56 · 8,5%). A referência mostra o rendimento como "8.5%", com ponto; o Kofra usa vírgula (DECISÃO KOFRA).
+- **Formato:** pt-BR (R$ 1.234,56 · 8,5%). A referência mostra o rendimento como "8.5%", com ponto; o Pila usa vírgula (DECISÃO PILA).
 
 ## Resumo
 
@@ -86,7 +86,7 @@ Pode ficar negativo (investir 100% da receita → −2.200,00). *(orcamento_sald
 Cada aba tem o seu gráfico: **Receita** (por tipo de renda; prevista só depois de recebida), **Fixa** (só despesas fixas) e **Variável** (só variáveis, com as parcelas). `% = valor da categoria ÷ total da aba × 100`, inteiro, meio para cima; cada fatia é arredondada sozinha, então a soma pode dar 99% ou 101% (out/2026: Mercado 67, Vestuário 32, Lazer 2).
 *(orcamento_categorias.csv e conferencia/orcamento_categorias.csv: 1 + 11 casos)*
 
-**Correção:** na Fase 2 este item dizia "fixas e variáveis juntas". Na Fase 4 a aba Fixa mostrou só a fixa (Moradia 100%) e o print da Fase 2 mostrou que o 68% / 32% era da aba Variável (Mercado 700 e Vestuário 333,34). Foi coincidência: 1.500 ÷ 2.200 e 700 ÷ 1.033,34 também dão 68% e 32%. O Kofra foi corrigido.
+**Correção:** na Fase 2 este item dizia "fixas e variáveis juntas". Na Fase 4 a aba Fixa mostrou só a fixa (Moradia 100%) e o print da Fase 2 mostrou que o 68% / 32% era da aba Variável (Mercado 700 e Vestuário 333,34). Foi coincidência: 1.500 ÷ 2.200 e 700 ÷ 1.033,34 também dão 68% e 32%. O Pila foi corrigido.
 
 ---
 
@@ -106,7 +106,7 @@ Base = liquidez + investimentos + bens (dívidas fora). Investimentos entram **a
 
 ### 2.4 Moeda estrangeira — NÃO CONFIRMADO
 Liquidez e dívidas aceitam dólar; o valor em reais usa a "cotação de hoje" (US$ 1 = R$ 5,34, mudou durante o teste). Fonte e horário da cotação não foram identificados.
-**Decisão (Checkpoint 2):** a v1 do Kofra trabalha só em reais; moeda estrangeira com cotação automática vai para o roadmap junto com a versão na nuvem.
+**Decisão (Checkpoint 2):** a v1 do Pila trabalha só em reais; moeda estrangeira com cotação automática vai para o roadmap junto com a versão na nuvem.
 
 ---
 
@@ -114,7 +114,7 @@ Liquidez e dívidas aceitam dólar; o valor em reais usa a "cotação de hoje" (
 - Ativo: nome, onde está, tipo (renda fixa, renda variável, fundos imobiliários, internacional, criptoativos), valor investido, valor atual. Mesmo modelo mês a mês do Patrimônio.
 - `rendimento = valor atual − valor investido` · `rendimento % = rendimento ÷ investido × 100` (1 casa).
 - Cards: valor atual (soma), total investido (soma), rendimento (soma e % sobre o total investido). Lista e gráfico agrupados por tipo. *(investimentos_rendimento.csv)*
-- **NÃO CONFIRMADO:** percentual quando o investido é zero. **Kofra:** mostra "—".
+- **NÃO CONFIRMADO:** percentual quando o investido é zero. **Pila:** mostra "—".
 
 ---
 
@@ -129,16 +129,16 @@ Liquidez e dívidas aceitam dólar; o valor em reais usa a "cotação de hoje" (
 ### 4.3 Percentual — CONFIRMADO
 `% = arredonda(valor atual ÷ meta × 100)`, inteiro, meio para cima. Consequências observadas: 41,5% → 42%; 99,5% aparece como 100% ainda incompleta; R$ 0,01 aparece como 0%.
 
-### 4.4 Estados — DECISÃO KOFRA
-A planta pede 3 estados; o Kofra usa:
+### 4.4 Estados — DECISÃO PILA
+A planta pede 3 estados; o Pila usa:
 
-| Estado | Condição | Texto (Kofra) |
+| Estado | Condição | Texto (Pila) |
 |---|---|---|
 | Sem cobertura | valor atual = 0 | "Comece a abrir seu guarda-chuva: registre onde a reserva está guardada." |
 | Cobertura parcial | 0 < valor atual < meta | "Faltam R$ X para cobrir tudo." |
 | Cobertura total | valor atual ≥ meta | "Pode chover: sua meta foi atingida." |
 
-A referência tem 6 faixas; os limites intermediários não foram medidos (NÃO CONFIRMADO) e **não serão usados**. A faixa que se compara com "os brasileiros" cita uma estatística sem fonte e fica fora do Kofra.
+A referência tem 6 faixas; os limites intermediários não foram medidos (NÃO CONFIRMADO) e **não serão usados**. A faixa que se compara com "os brasileiros" cita uma estatística sem fonte e fica fora do Pila.
 
 ---
 
@@ -160,7 +160,7 @@ N     = arredonda(falta ÷ meses), em reais inteiros
 oculta se: sem prazo, prazo antes de hoje, ou falta ≤ 0
 ```
 12.000 até 31/12/2027 (14 meses) → 857 · com 10.850 já guardados em 20.000 → 654. *(metas_aporte_mensal.csv: 14 casos)*
-**DECISÃO KOFRA:** a referência só mostra a sugestão no formulário de criação; o Kofra mostra também no card da meta, recalculada com o que falta (extra pedido na planta).
+**DECISÃO PILA:** a referência só mostra a sugestão no formulário de criação; o Pila mostra também no card da meta, recalculada com o que falta (extra pedido na planta).
 
 ---
 
@@ -179,9 +179,9 @@ Se o valor da janela anterior for zero, o card mostra "sem período anterior" �
 
 ### 6.3 Estoques (Patrimônio, Investimentos, Reserva)
 Valor no **último mês da janela** comparado com o último mês da janela anterior; zero → "sem período anterior". *(visao_geral_estoques.csv)*
-**NÃO CONFIRMADO:** como a referência obtém a reserva em meses passados. **Kofra:** usa os aportes e saques com data para reconstruir o valor em qualquer mês.
+**NÃO CONFIRMADO:** como a referência obtém a reserva em meses passados. **Pila:** usa os aportes e saques com data para reconstruir o valor em qualquer mês.
 
-### 6.4 Decisões Kofra
+### 6.4 Decisões Pila
 - **Variação em R$ e em %** juntas (decisão do Checkpoint 2; a planta pede seta + percentual): `% = variação ÷ |anterior| × 100`, 1 casa; sem anterior → só o aviso.
 - O gráfico mensal mostra **todos** os meses da janela (a referência pula meses vazios).
 
@@ -191,7 +191,7 @@ Valor no **último mês da janela** comparado com o último mês da janela anter
 - O card principal é escolhido pela pessoa: patrimônio total (padrão), investimentos, despesas do mês, saldo, reserva, bens ou uma meta. Cada opção reaproveita o cálculo do módulo de origem.
 - **Despesas do mês:** `% do orçamento = arredonda(despesas ÷ (receita − investir) × 100)` (2.533,34 ÷ 4.200,10 → 60%). *(inicio_indicadores.csv)*
 - Reserva e metas no card: percentual limitado a 100%.
-- **NÃO CONFIRMADO:** comportamento quando receita − investir ≤ 0. **Kofra:** barra cheia em vermelho e "sem orçamento livre neste mês".
+- **NÃO CONFIRMADO:** comportamento quando receita − investir ≤ 0. **Pila:** barra cheia em vermelho e "sem orçamento livre neste mês".
 
 ---
 
@@ -219,7 +219,7 @@ percentuais = parte ÷ 1.000.000 × 100 (1 casa)
 texto: "19 anos e 4 meses", "1 ano", "11 meses", "20 anos"
 ```
 Limite confirmado nos dois lados: 0,29% a.m. com R$ 100/mês → 97 anos e 11 meses; 0,28% → inalcançável. *(primeiro_milhao_tempo.csv: 10 casos)*
-**DECISÃO KOFRA:** singular correto ("1 mês", "1 ano e 1 mês"), que não apareceu nos testes.
+**DECISÃO PILA:** singular correto ("1 mês", "1 ano e 1 mês"), que não apareceu nos testes.
 
 ### 8.3 Primeiro milhão — descobrir o aporte
 ```
@@ -230,20 +230,20 @@ investido = inicial + aporte × n   ← usa o aporte sem arredondar
 juros = meta − investido
 ```
 10.000 em 20 anos a 1% a.m. → 900,75/mês. *(primeiro_milhao_aporte.csv: 3 casos)*
-**NÃO CONFIRMADO:** taxa zero neste modo. **Kofra:** aporte = (meta − inicial) ÷ n.
+**NÃO CONFIRMADO:** taxa zero neste modo. **Pila:** aporte = (meta − inicial) ÷ n.
 
 ---
 
 ## 9. Lista NÃO CONFIRMADO
 
-| # | Ponto | O que o Kofra faz por enquanto |
+| # | Ponto | O que o Pila faz por enquanto |
 |---|---|---|
 | 1 | Propagação do "Investir" quando se altera um mês que já foi herdado | Vale deste mês em diante até o próximo ajuste (decidido no CP2) |
 | 2 | Limites das faixas intermediárias de mensagem da reserva | Não usa: 3 estados da planta |
 | 3 | Valor da reserva em meses passados (Visão geral) | Reconstrói pelos aportes e saques datados |
 | 4 | Fonte e horário da cotação do dólar | v1 só em reais (decidido no CP2) |
 | 5 | Formatos aceitos em "Importar extrato" | Fora da v1 (decidido no CP2) |
-| 6 | Tipos de notificação (o sino estava vazio) | Avisos próprios do Kofra (aprovados no CP2): receita prevista atrasada, despesa fixa vencendo em até 3 dias, meta com prazo em até 30 dias |
+| 6 | Tipos de notificação (o sino estava vazio) | Avisos próprios do Pila (aprovados no CP2): receita prevista atrasada, despesa fixa vencendo em até 3 dias, meta com prazo em até 30 dias |
 | 7 | Rendimento % com investido = 0 | Mostra "—" |
 | 8 | Despesas do mês % com receita − investir ≤ 0 | Barra cheia e aviso |
 | 9 | Primeiro milhão (aporte) com taxa 0 | (meta − inicial) ÷ n |
@@ -254,7 +254,7 @@ juros = meta − investido
 | 14 | Dólar em lugares diferentes (Fase 4): a Visão geral usou o valor guardado (US$ 100 = R$ 533,50) e o Início/Patrimônio a cotação do dia (R$ 535,13) | v1 só em reais (CP2) |
 | 15 | Meta da reserva com novos valores (Fase 4): mudar o nível ou o custo exigia alterar a configuração real da conta, e isso foi bloqueado | Continua a fórmula confirmada na Fase 2 (3 casos) + 1 caso novo igual |
 
-## 10. Decisões Kofra (diferenças intencionais)
+## 10. Decisões Pila (diferenças intencionais)
 
 1. Variação em R$ e % na Visão geral.
 2. Reserva com 3 estados, textos próprios e a metáfora do guarda-chuva; nenhuma estatística sem fonte.
@@ -264,7 +264,7 @@ juros = meta − investido
 6. Singular e plural corretos nos tempos.
 7. Investir vale deste mês em diante; v1 só em reais; sem importação de extrato na v1.
 8. Comportamentos provisórios da lista acima, até haver confirmação.
-9. Reserva acima da meta (Fase 4): o Kofra mostra o percentual real (ex.: 150%) junto do estado "Cobertura total"; a referência mostra só a mensagem de 100%.
+9. Reserva acima da meta (Fase 4): o Pila mostra o percentual real (ex.: 150%) junto do estado "Cobertura total"; a referência mostra só a mensagem de 100%.
 10. Composição do patrimônio (Fase 4): rosca por grupo (liquidez, investimentos, bens) e lista com todos os itens e seus percentuais; a referência mostra uma rosca por item e outra por grupo. Os percentuais são os mesmos.
 11. Textos de interface próprios (revisados na Fase 4 para não repetir frases da referência), por exemplo "Separe ~R$ N por mês até o prazo" no lugar da frase da referência.
 12. Formulário de lançamento sem categoria pré-escolhida (Fase 4): pede a escolha, para nada cair sem querer na primeira categoria da lista.

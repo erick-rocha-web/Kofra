@@ -1,4 +1,4 @@
-// Monta, com as próprias ações do Kofra, réplicas dos dados de teste que estão na referência.
+// Monta, com as próprias ações do Pila, réplicas dos dados de teste que estão na referência.
 // Saída: sementes/*.json (objeto Dados, pronto para gravar no IndexedDB do app).
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

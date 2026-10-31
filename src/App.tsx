@@ -74,8 +74,8 @@ export function App() {
 
   useEffect(() => {
     const raiz = document.documentElement;
-    if (tema === 'claro' || tema === 'escuro') raiz.dataset.kofraTema = tema;
-    else delete raiz.dataset.kofraTema;
+    if (tema === 'claro' || tema === 'escuro') raiz.dataset.pilaTema = tema;
+    else delete raiz.dataset.pilaTema;
   }, [tema]);
 
   if (estado.status === 'carregando') return <Carregando />;

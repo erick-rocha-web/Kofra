@@ -55,7 +55,7 @@ function exigir(cond, msg) {
     await nome.blur();
     await page.getByRole('radio', { name: /Escuro/ }).click();
     await page.waitForTimeout(200);
-    const tema = await page.evaluate(() => document.documentElement.getAttribute('data-kofra-tema'));
+    const tema = await page.evaluate(() => document.documentElement.getAttribute('data-pila-tema'));
     exigir(tema === 'escuro', 'tema não aplicado: ' + tema);
     await foto('02-config-escuro');
     await page.getByRole('radio', { name: /Claro/ }).click();
@@ -337,7 +337,7 @@ function exigir(cond, msg) {
     const antes = await page.evaluate(
       () =>
         new Promise((res) => {
-          const r = indexedDB.open('kofra', 1);
+          const r = indexedDB.open('pila', 1);
           r.onsuccess = () => {
             const g = r.result.transaction('dados').objectStore('dados').get('principal');
             g.onsuccess = () => res(JSON.stringify(g.result));
@@ -348,7 +348,7 @@ function exigir(cond, msg) {
     const arq = path.join(OUT, 'backup.json');
     await download.saveAs(arq);
     const conteudo = JSON.parse(fs.readFileSync(arq, 'utf8'));
-    exigir(conteudo.app === 'kofra' && conteudo.dados.lancamentos.length > 0, 'backup sem dados');
+    exigir(conteudo.app === 'pila' && conteudo.dados.lancamentos.length > 0, 'backup sem dados');
     await page.getByRole('button', { name: 'Apagar tudo', exact: true }).click();
     const palavra = dlg().getByRole('textbox');
     await palavra.fill('APAGAR');
@@ -363,7 +363,7 @@ function exigir(cond, msg) {
     const depois = await page.evaluate(
       () =>
         new Promise((res) => {
-          const r = indexedDB.open('kofra', 1);
+          const r = indexedDB.open('pila', 1);
           r.onsuccess = () => {
             const g = r.result.transaction('dados').objectStore('dados').get('principal');
             g.onsuccess = () => res(JSON.stringify(g.result));

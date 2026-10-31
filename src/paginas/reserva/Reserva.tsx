@@ -28,7 +28,7 @@ function Ajuda({ aberto, aoFechar }: { aberto: boolean; aoFechar: () => void }) 
           <p className="font-semibold text-texto">De onde vem o total da reserva</p>
           <p>
             É a soma dos locais da lista. Um local pode ter aportes e saques registrados por você ou acompanhar um investimento cadastrado no
-            Kofra.
+            Pila.
           </p>
         </div>
         <div>

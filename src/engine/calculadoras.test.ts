@@ -83,7 +83,7 @@ describe('primeiro_milhao_aporte.csv — aporte da série que chega a R$ 1 milh�
       if (r.obs_pct_juros) expect(res.pctJuros).toBe(num(r.obs_pct_juros));
     });
   }
-  it('taxa zero divide o que falta pelo prazo (decisão Kofra)', () => {
+  it('taxa zero divide o que falta pelo prazo (decisão Pila)', () => {
     const res = aporteParaMilhao({ inicial: 0, prazo: 10, unidadePrazo: 'anos', taxa: 0, unidadeTaxa: 'mensal' });
     if (!res.ok) throw new Error('esperava resultado');
     expect(res.aporte).toBe(833333);

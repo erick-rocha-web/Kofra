@@ -1,4 +1,4 @@
-// Coleta todos os textos que o Kofra mostra (telas, diálogos, rótulos acessíveis e placeholders) para a checagem de originalidade.
+// Coleta todos os textos que o Pila mostra (telas, diálogos, rótulos acessíveis e placeholders) para a checagem de originalidade.
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
@@ -47,6 +47,6 @@ async function colher(page) {
   }
   await browser.close();
   fs.mkdirSync(path.join(__dirname, 'saida'), { recursive: true });
-  fs.writeFileSync(path.join(__dirname, 'saida', 'kofra-textos.txt'), [...textos].sort().join('\n'));
+  fs.writeFileSync(path.join(__dirname, 'saida', 'pila-textos.txt'), [...textos].sort().join('\n'));
   console.log('linhas únicas:', textos.size);
 })();

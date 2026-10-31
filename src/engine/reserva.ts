@@ -34,7 +34,7 @@ export function percentualReserva(atual: Centavos, meta: Centavos | null): numbe
 
 export type EstadoReserva = 'zero' | 'parcial' | 'completo';
 
-/** Os 3 estados da planta (DECISÃO KOFRA). */
+/** Os 3 estados da planta (DECISÃO PILA). */
 export function estadoReserva(atual: Centavos, meta: Centavos | null): EstadoReserva {
   if (atual <= 0) return 'zero';
   if (meta !== null && atual >= meta) return 'completo';

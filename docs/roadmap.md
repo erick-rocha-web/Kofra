@@ -1,14 +1,14 @@
-# Kofra — Roadmap
+# Pila — Roadmap
 
 A v1 roda inteira no navegador, sem servidor ("local agora"). Este é o caminho para a versão na nuvem ("nuvem depois") e para o que ficou de fora de propósito. A ordem sugere dependências: cada etapa usa a anterior.
 
 ## Etapa 1 — Conta e nuvem (base de tudo o que vem depois)
 
-**Objetivo:** usar o Kofra em qualquer aparelho, com os mesmos dados, sem depender do claude.ai.
+**Objetivo:** usar o Pila em qualquer aparelho, com os mesmos dados, sem depender do claude.ai.
 
 - **Backend com API** que guarda o objeto `Dados` por usuário. O app já fala com uma interface única (`src/storage/armazenamento.ts`: `carregar`, `salvar`, `apagarTudo`); basta criar a versão `ArmazenamentoApi` e escolher qual usar.
 - **Banco de dados:** começar guardando o documento inteiro por usuário (simples e igual ao formato do backup); separar em tabelas (lançamentos, recorrentes, patrimônio…) quando houver relatórios no servidor ou muitos dados.
-- **Login:** e-mail com link mágico ou Google/Apple; nada de senha guardada pelo Kofra. Sessão curta no navegador e renovação automática.
+- **Login:** e-mail com link mágico ou Google/Apple; nada de senha guardada pelo Pila. Sessão curta no navegador e renovação automática.
 - **Sincronização:** salvar alterações com versão (número ou data) e resolver conflito de dois aparelhos pela mais recente por item; manter o IndexedDB como cópia local para funcionar sem internet.
 - **Migração da v1:** na primeira entrada, oferecer "enviar os dados deste navegador para a sua conta" (usa o mesmo formato do backup JSON).
 - **Privacidade e segurança:** criptografia em trânsito e em repouso, exportar e apagar a conta a qualquer momento, registro de acessos.
@@ -27,7 +27,7 @@ A v1 roda inteira no navegador, sem servidor ("local agora"). Este é o caminho 
 
 ## Etapa 4 — Assistente fora do claude.ai
 
-- Hoje o Assistente funciona dentro do claude.ai, com a conta da própria pessoa. Na nuvem, ele passa a chamar a API do Claude pelo servidor do Kofra (a chave nunca vai para o navegador), com limite de uso por pessoa.
+- Hoje o Assistente funciona dentro do claude.ai, com a conta da própria pessoa. Na nuvem, ele passa a chamar a API do Claude pelo servidor do Pila (a chave nunca vai para o navegador), com limite de uso por pessoa.
 - Foto de nota fiscal e áudio para registrar gastos.
 - WhatsApp: registrar um gasto mandando mensagem e receber o resumo do mês.
 

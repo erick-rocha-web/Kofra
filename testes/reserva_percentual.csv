@@ -1,4 +1,4 @@
-id;papel;meta;locais;obs_valor_atual;obs_percentual;obs_faixa_referencia;estado_kofra;descricao
+id;papel;meta;locais;obs_valor_atual;obs_percentual;obs_faixa_referencia;estado_pila;descricao
 RS01;base;2400,00;;0,00;0;neutra (sem reserva);zero;nenhum local cadastrado
 RS02;variacao;15000,00;6225,00;6225,00;42;laranja;parcial;41,5% arredonda para 42%
 RS03;variacao;15000,00;11250,00;11250,00;75;amarela;parcial;

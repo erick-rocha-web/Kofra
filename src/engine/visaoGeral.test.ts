@@ -125,7 +125,7 @@ describe('reserva_percentual.csv — soma dos locais; % inteiro meio para cima; 
       const atual = valorReserva(d, '2026-10-27');
       const meta = c(r.meta);
       expect(atual).toBe(c(r.obs_valor_atual));
-      expect(estadoReserva(atual, meta)).toBe(r.estado_kofra);
+      expect(estadoReserva(atual, meta)).toBe(r.estado_pila);
       if (r.obs_percentual) expect(percentualReserva(atual, meta)).toBe(num(r.obs_percentual));
     });
   }

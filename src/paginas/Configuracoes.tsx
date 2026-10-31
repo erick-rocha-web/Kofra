@@ -62,16 +62,16 @@ const DOCUMENTOS: Record<'termos' | 'privacidade', { titulo: string; paragrafos:
   termos: {
     titulo: 'Termos de uso',
     paragrafos: [
-      'O Kofra é uma ferramenta pessoal para organizar receitas, despesas, investimentos, patrimônio, reserva e metas.',
+      'O Pila é uma ferramenta pessoal para organizar receitas, despesas, investimentos, patrimônio, reserva e metas.',
       'Os cálculos e as calculadoras servem para planejamento e estudo. Eles não são recomendação de investimento nem consultoria financeira, contábil ou jurídica.',
       'Você é responsável pelos dados que cadastra e por manter backups. Nesta versão os dados ficam só no seu navegador.',
-      'O Assistente usa o Claude, da Anthropic, quando o Kofra está aberto no claude.ai. As respostas podem conter erros: confira antes de decidir.',
+      'O Assistente usa o Claude, da Anthropic, quando o Pila está aberto no claude.ai. As respostas podem conter erros: confira antes de decidir.',
     ],
   },
   privacidade: {
     titulo: 'Privacidade',
     paragrafos: [
-      'Seus dados ficam guardados no armazenamento deste navegador (IndexedDB). O Kofra não tem servidor próprio e não envia seus dados para lugar nenhum por conta própria.',
+      'Seus dados ficam guardados no armazenamento deste navegador (IndexedDB). O Pila não tem servidor próprio e não envia seus dados para lugar nenhum por conta própria.',
       'Quando você exporta um backup, o arquivo vai para onde você escolher salvar.',
       'Quando você usa o Assistente, a sua pergunta e um resumo dos seus números são enviados ao Claude para gerar a resposta, usando a sua conta do claude.ai. Nada é enviado se você não usar o Assistente.',
       'Para apagar tudo, use "Apagar todos os dados" nesta tela. Limpar os dados do site no navegador também apaga.',
@@ -146,7 +146,7 @@ export function Configuracoes() {
   return (
     <Pagina titulo="Configurações" estreita>
       <div className="flex flex-col gap-5">
-        <Secao id={idsSecao.aparencia} icone="palette" titulo="Aparência" descricao="Escolha o tema. Em Sistema, o Kofra acompanha o tema do aparelho.">
+        <Secao id={idsSecao.aparencia} icone="palette" titulo="Aparência" descricao="Escolha o tema. Em Sistema, o Pila acompanha o tema do aparelho.">
           <Segmentado<Tema>
             rotulo="Tema"
             valor={config.tema}
@@ -183,7 +183,7 @@ export function Configuracoes() {
         <Secao id={idsSecao.moeda} icone="coins" titulo="Moeda">
           <Linha
             titulo="Real brasileiro (R$)"
-            texto="Todos os valores do Kofra são em reais. Outras moedas chegam junto com a versão na nuvem."
+            texto="Todos os valores do Pila são em reais. Outras moedas chegam junto com a versão na nuvem."
             acao={<Selo tom="neutro">BRL</Selo>}
           />
         </Secao>
@@ -191,7 +191,7 @@ export function Configuracoes() {
         <Secao id={idsSecao.compartilhar} icone="users-three" titulo="Compartilhar">
           <Linha
             titulo="Convidar outra pessoa"
-            texto="Para dividir as finanças com alguém, o Kofra precisa de conta com login. Esse recurso está no plano da versão na nuvem."
+            texto="Para dividir as finanças com alguém, o Pila precisa de conta com login. Esse recurso está no plano da versão na nuvem."
             acao={
               <Botao icone="lock-simple" disabled aria-disabled>
                 Em breve
@@ -248,7 +248,7 @@ export function Configuracoes() {
               config.exemplo
                 ? 'Os exemplos estão carregados. Use a faixa no topo para apagá-los.'
                 : proprios
-                  ? 'Disponível só com o Kofra vazio, para não misturar com os seus dados.'
+                  ? 'Disponível só com o Pila vazio, para não misturar com os seus dados.'
                   : 'Preenche o app com números fictícios para você conhecer cada tela.'
             }
             acao={
@@ -298,7 +298,7 @@ export function Configuracoes() {
         rotuloConfirmar="Apagar tudo"
         texto={
           <>
-            <p>Isso remove {contar(dados)} e volta o Kofra ao estado inicial.</p>
+            <p>Isso remove {contar(dados)} e volta o Pila ao estado inicial.</p>
             <p className="mt-2">Se quiser guardar uma cópia, exporte um backup antes.</p>
           </>
         }
@@ -314,7 +314,7 @@ export function Configuracoes() {
         aoFechar={() => setExemplo(false)}
         titulo="Carregar dados de exemplo?"
         rotuloConfirmar="Carregar exemplo"
-        texto="O Kofra vai mostrar números fictícios em todas as telas, com uma faixa avisando. Quando quiser começar de verdade, é só apagar os exemplos."
+        texto="O Pila vai mostrar números fictícios em todas as telas, com uma faixa avisando. Quando quiser começar de verdade, é só apagar os exemplos."
         aoConfirmar={() => {
           const ex = gerarExemplo();
           ex.config = { ...ex.config, tema: config.tema, nome: config.nome, ocultarValores: config.ocultarValores };
@@ -355,7 +355,7 @@ export function Configuracoes() {
           setErroColado(null);
         }}
         titulo="Colar backup"
-        subtitulo="Cole aqui o conteúdo do arquivo .json exportado pelo Kofra."
+        subtitulo="Cole aqui o conteúdo do arquivo .json exportado pelo Pila."
         rodape={
           <>
             <Botao variante="secundario" onClick={() => setColar(false)}>
@@ -381,13 +381,13 @@ export function Configuracoes() {
           </>
         }
       >
-        <Campo rotulo="Conteúdo do backup" htmlFor="kofra-colar-backup" erro={erroColado}>
+        <Campo rotulo="Conteúdo do backup" htmlFor="pila-colar-backup" erro={erroColado}>
           <AreaTexto
-            id="kofra-colar-backup"
+            id="pila-colar-backup"
             rows={8}
             value={textoColado}
             onChange={(e) => setTextoColado(e.target.value)}
-            placeholder='{"app": "kofra", ...}'
+            placeholder='{"app": "pila", ...}'
             className="font-mono text-[12.5px]"
           />
         </Campo>

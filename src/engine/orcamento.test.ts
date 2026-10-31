@@ -136,7 +136,7 @@ describe('parcelamento.csv — 1ª parcela absorve a sobra; dia 1º de cada mês
   }
 });
 
-describe('regras do Kofra', () => {
+describe('regras do Pila', () => {
   it('recorrente: versões valem do mês em diante; fim encerra', () => {
     const r = recorrente('despesa', '2026-10', 150000, 10);
     r.versoes.push({ aPartirDe: '2027-01', descricao: 'reajuste', valor: 160000, dia: 10, categoriaId: 'cat' });

@@ -1,8 +1,8 @@
-// Ferramentas comuns para dirigir o Kofra (build servido em http://127.0.0.1:4173) no Playwright.
+// Ferramentas comuns para dirigir o Pila (build servido em http://127.0.0.1:4173) no Playwright.
 const fs = require('fs');
 const path = require('path');
 
-const URL_APP = process.env.KOFRA_URL || 'http://127.0.0.1:4173/index.html';
+const URL_APP = process.env.PILA_URL || 'http://127.0.0.1:4173/index.html';
 const SEEDS = path.join(__dirname, 'sementes');
 
 async function abrir(browser, opts = {}) {
@@ -31,7 +31,7 @@ async function semear(page, nomeOuDados) {
   await page.evaluate(
     (d) =>
       new Promise((res, rej) => {
-        const req = indexedDB.open('kofra', 1);
+        const req = indexedDB.open('pila', 1);
         req.onupgradeneeded = () => {
           if (!req.result.objectStoreNames.contains('dados')) req.result.createObjectStore('dados');
         };
