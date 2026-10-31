@@ -189,3 +189,16 @@ export interface Dados {
   conversa: MensagemAssistente[];
   avisosDispensados: string[];
 }
+
+/** Estado da sincronização, guardado no IndexedDB junto com os dados. */
+export interface EstadoSinc {
+  /** Conta dona desta cópia; null quando os dados são só deste navegador. */
+  usuarioId: string | null;
+  /** Revisão da nuvem em que esta cópia se baseia; 0 quando o documento ainda não existe. */
+  revisaoBase: number;
+  /** Há alterações locais ainda não enviadas. */
+  pendente: boolean;
+  sincronizadoEm: string | null;
+}
+
+export const SINC_INICIAL: EstadoSinc = { usuarioId: null, revisaoBase: 0, pendente: false, sincronizadoEm: null };

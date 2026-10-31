@@ -1,13 +1,16 @@
-import type { Dados } from './tipos';
+import type { Dados, EstadoSinc } from './tipos';
 
 /**
- * Interface única de armazenamento. Hoje: IndexedDB do navegador (ou memória, se o
- * navegador bloquear). Amanhã: uma API na nuvem com a mesma interface.
+ * Interface única da cópia local: IndexedDB do navegador (ou memória, se o navegador
+ * bloquear). A nuvem fica em src/nuvem/ e sincroniza a partir desta cópia.
  */
 export interface Armazenamento {
   readonly tipo: 'indexeddb' | 'memoria';
   carregar(): Promise<Dados | null>;
-  salvar(dados: Dados): Promise<void>;
+  /** Com `sinc`, grava os dois na mesma transação: uma alteração nunca fica sem a marca de pendente. */
+  salvar(dados: Dados, sinc?: EstadoSinc): Promise<void>;
+  carregarSinc(): Promise<EstadoSinc | null>;
+  salvarSinc(sinc: EstadoSinc): Promise<void>;
   apagarTudo(): Promise<void>;
 }
 
@@ -16,6 +19,7 @@ const BANCO = 'pila';
 const BANCO_ANTIGO = 'kofra';
 const LOJA = 'dados';
 const CHAVE = 'principal';
+const CHAVE_SINC = 'sincronizacao';
 
 function abrirBanco(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -89,12 +93,27 @@ class ArmazenamentoIndexedDB implements Armazenamento {
     return (v as Dados | undefined) ?? null;
   }
 
-  async salvar(dados: Dados): Promise<void> {
-    await this.transacao('readwrite', (s) => s.put(dados, CHAVE));
+  async salvar(dados: Dados, sinc?: EstadoSinc): Promise<void> {
+    await this.transacao('readwrite', (s) => {
+      if (sinc) s.put(sinc, CHAVE_SINC);
+      return s.put(dados, CHAVE);
+    });
+  }
+
+  async carregarSinc(): Promise<EstadoSinc | null> {
+    const v = await this.transacao('readonly', (s) => s.get(CHAVE_SINC));
+    return (v as EstadoSinc | undefined) ?? null;
+  }
+
+  async salvarSinc(sinc: EstadoSinc): Promise<void> {
+    await this.transacao('readwrite', (s) => s.put(sinc, CHAVE_SINC));
   }
 
   async apagarTudo(): Promise<void> {
-    await this.transacao('readwrite', (s) => s.delete(CHAVE));
+    await this.transacao('readwrite', (s) => {
+      s.delete(CHAVE_SINC);
+      return s.delete(CHAVE);
+    });
     await apagarBanco(BANCO_ANTIGO);
   }
 }
@@ -122,14 +141,23 @@ async function migrarBancoAntigo(novo: Armazenamento): Promise<void> {
 class ArmazenamentoMemoria implements Armazenamento {
   readonly tipo = 'memoria' as const;
   private copia: Dados | null = null;
+  private sinc: EstadoSinc | null = null;
   async carregar() {
     return this.copia;
   }
-  async salvar(dados: Dados) {
+  async salvar(dados: Dados, sinc?: EstadoSinc) {
     this.copia = dados;
+    if (sinc) this.sinc = sinc;
+  }
+  async carregarSinc() {
+    return this.sinc;
+  }
+  async salvarSinc(sinc: EstadoSinc) {
+    this.sinc = sinc;
   }
   async apagarTudo() {
     this.copia = null;
+    this.sinc = null;
   }
 }
 

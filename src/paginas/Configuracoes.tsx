@@ -1,15 +1,19 @@
 import { useId, useRef, useState, type ReactNode } from 'react';
-import { atualizar, loja, useDados, useEstadoLoja } from '../estado/loja';
+import { atualizar, loja, useDados, useEstadoLoja, useSinc } from '../estado/loja';
 import { useUI } from '../estado/ui';
 import { copiarTexto, lerArquivoTexto, salvarArquivo } from '../estado/arquivos';
 import { Pagina } from '../layout/Pagina';
+import { obterSincronizador, useConta, useNuvem } from '../nuvem/conta';
+import { ErroSemRede } from '../nuvem/sincronizacao';
 import { gerarBackup, lerBackup, nomeArquivoBackup, ErroBackup } from '../storage/backup';
 import { gerarExemplo } from '../storage/exemplo';
 import { temDadosProprios } from '../storage/padrao';
+import { contar } from '../storage/resumo';
 import type { Dados, Tema } from '../storage/tipos';
 import { AreaTexto, Botao, Campo, Entrada, Medalhao, Segmentado, Selo } from '../ui/base';
 import { Icone } from '../ui/Icone';
 import { Confirmacao, Modal } from '../ui/Modal';
+import { BlocoConta } from './conta/BlocoConta';
 
 function Secao({
   id,
@@ -58,43 +62,43 @@ function Linha({ titulo, texto, acao }: { titulo: ReactNode; texto?: ReactNode; 
   );
 }
 
-const DOCUMENTOS: Record<'termos' | 'privacidade', { titulo: string; paragrafos: string[] }> = {
+const documentos = (nuvem: boolean): Record<'termos' | 'privacidade', { titulo: string; paragrafos: string[] }> => ({
   termos: {
     titulo: 'Termos de uso',
     paragrafos: [
       'O Pila é uma ferramenta pessoal para organizar receitas, despesas, investimentos, patrimônio, reserva e metas.',
       'Os cálculos e as calculadoras servem para planejamento e estudo. Eles não são recomendação de investimento nem consultoria financeira, contábil ou jurídica.',
-      'Você é responsável pelos dados que cadastra e por manter backups. Nesta versão os dados ficam só no seu navegador.',
+      nuvem
+        ? 'Você é responsável pelos dados que cadastra e por manter backups. Sem login, os dados ficam só neste navegador. Com login, eles também ficam guardados no Supabase.'
+        : 'Você é responsável pelos dados que cadastra e por manter backups. Aqui os dados ficam só no seu navegador.',
       'O Assistente usa o Claude, da Anthropic, quando o Pila está aberto no claude.ai. As respostas podem conter erros: confira antes de decidir.',
     ],
   },
   privacidade: {
     titulo: 'Privacidade',
     paragrafos: [
-      'Seus dados ficam guardados no armazenamento deste navegador (IndexedDB). O Pila não tem servidor próprio e não envia seus dados para lugar nenhum por conta própria.',
+      nuvem
+        ? 'Sem login, tudo fica neste navegador (IndexedDB). Com login, os dados também ficam guardados no Supabase, num servidor em São Paulo, e só a sua conta acessa.'
+        : 'Seus dados ficam guardados no armazenamento deste navegador (IndexedDB). Eles não são enviados para lugar nenhum por conta própria.',
       'Quando você exporta um backup, o arquivo vai para onde você escolher salvar.',
       'Quando você usa o Assistente, a sua pergunta e um resumo dos seus números são enviados ao Claude para gerar a resposta, usando a sua conta do claude.ai. Nada é enviado se você não usar o Assistente.',
-      'Para apagar tudo, use "Apagar todos os dados" nesta tela. Limpar os dados do site no navegador também apaga.',
+      nuvem
+        ? 'Para apagar tudo, use "Apagar todos os dados" nesta tela: com login, isso apaga também os dados da nuvem. Limpar os dados do site no navegador apaga só a cópia deste navegador.'
+        : 'Para apagar tudo, use "Apagar todos os dados" nesta tela. Limpar os dados do site no navegador também apaga.',
     ],
   },
-};
-
-function contar(d: Dados): string {
-  const partes = [
-    [d.lancamentos.length + d.recorrentes.length, 'lançamento', 'lançamentos'],
-    [d.patrimonio.length, 'item de patrimônio', 'itens de patrimônio'],
-    [d.ativos.length, 'investimento', 'investimentos'],
-    [d.metas.length, 'meta', 'metas'],
-  ] as const;
-  const txt = partes.filter(([n]) => n > 0).map(([n, um, varios]) => `${n} ${n === 1 ? um : varios}`);
-  return txt.length ? txt.join(', ') : 'nenhum dado cadastrado';
-}
+});
 
 export function Configuracoes() {
   const dados = useDados();
   const estadoLoja = useEstadoLoja();
   const { avisar, navegar } = useUI();
   const { config } = dados;
+  const { disponivel: nuvem } = useConta();
+  const { usuario } = useNuvem();
+  const sinc = useSinc();
+  const comConta = !!usuario || !!sinc.usuarioId;
+  const sincronizando = !!usuario && sinc.usuarioId === usuario.id;
   const idNome = useId();
   const idsSecao = { aparencia: useId(), conta: useId(), moeda: useId(), compartilhar: useId(), dados: useId(), docs: useId(), ajuda: useId(), perigo: useId() };
 
@@ -105,7 +109,8 @@ export function Configuracoes() {
   const [erroColado, setErroColado] = useState<string | null>(null);
   const [apagar, setApagar] = useState(false);
   const [exemplo, setExemplo] = useState(false);
-  const [doc, setDoc] = useState<keyof typeof DOCUMENTOS | null>(null);
+  const [doc, setDoc] = useState<'termos' | 'privacidade' | null>(null);
+  const docs = documentos(nuvem);
   const arquivo = useRef<HTMLInputElement>(null);
 
   const marcarBackup = () =>
@@ -143,6 +148,22 @@ export function Configuracoes() {
     : null;
   const proprios = temDadosProprios(dados);
 
+  async function apagarTudo() {
+    try {
+      if (usuario) await obterSincronizador()?.apagarTudo();
+      else await loja.apagarTudo();
+      avisar('Todos os dados foram apagados.');
+      navegar('inicio');
+    } catch (e) {
+      avisar(
+        e instanceof ErroSemRede
+          ? 'Sem internet: nada foi apagado. Tente de novo quando a conexão voltar.'
+          : 'Não foi possível apagar os dados da nuvem. Nada foi apagado.',
+        'erro',
+      );
+    }
+  }
+
   return (
     <Pagina titulo="Configurações" estreita>
       <div className="flex flex-col gap-5">
@@ -163,7 +184,7 @@ export function Configuracoes() {
           />
         </Secao>
 
-        <Secao id={idsSecao.conta} icone="user-circle" titulo="Conta" descricao="Seu nome aparece no menu. Nesta versão não existe login: os dados ficam neste navegador.">
+        <Secao id={idsSecao.conta} icone="user-circle" titulo="Conta" descricao={nuvem ? 'Seu nome aparece no menu. Sem login, tudo fica neste navegador. Com login, os dados também ficam guardados no Supabase, num servidor em São Paulo, e só a sua conta acessa.' : 'Seu nome aparece no menu. Aqui não há login: os dados ficam neste navegador.'}>
           <Campo rotulo="Nome" htmlFor={idNome}>
             <Entrada
               id={idNome}
@@ -178,12 +199,13 @@ export function Configuracoes() {
               }
             />
           </Campo>
+          <BlocoConta />
         </Secao>
 
         <Secao id={idsSecao.moeda} icone="coins" titulo="Moeda">
           <Linha
             titulo="Real brasileiro (R$)"
-            texto="Todos os valores do Pila são em reais. Outras moedas chegam junto com a versão na nuvem."
+            texto="Todos os valores do Pila são em reais."
             acao={<Selo tom="neutro">BRL</Selo>}
           />
         </Secao>
@@ -191,7 +213,7 @@ export function Configuracoes() {
         <Secao id={idsSecao.compartilhar} icone="users-three" titulo="Compartilhar">
           <Linha
             titulo="Convidar outra pessoa"
-            texto="Para dividir as finanças com alguém, o Pila precisa de conta com login. Esse recurso está no plano da versão na nuvem."
+            texto="Dividir as finanças com outra pessoa ainda não está disponível."
             acao={
               <Botao icone="lock-simple" disabled aria-disabled>
                 Em breve
@@ -206,7 +228,9 @@ export function Configuracoes() {
           titulo="Dados"
           descricao={
             estadoLoja.persistente
-              ? 'Tudo fica guardado neste navegador. Exporte um backup de vez em quando e sempre antes de limpar o navegador ou trocar de aparelho.'
+              ? sincronizando
+                ? 'Seus dados ficam neste aparelho e na nuvem. Um backup de vez em quando é uma cópia a mais, só sua.'
+                : 'Tudo fica guardado neste navegador. Exporte um backup de vez em quando e sempre antes de limpar o navegador ou trocar de aparelho.'
               : 'Atenção: este navegador não está guardando dados. Exporte um backup antes de fechar.'
           }
         >
@@ -221,7 +245,7 @@ export function Configuracoes() {
           />
           <Linha
             titulo="Importar backup"
-            texto="Substitui todos os dados atuais pelos do arquivo."
+            texto={sincronizando ? 'Substitui todos os dados atuais pelos do arquivo, aqui e na nuvem.' : 'Substitui todos os dados atuais pelos do arquivo.'}
             acao={
               <>
                 <Botao icone="upload-simple" onClick={() => arquivo.current?.click()}>
@@ -245,19 +269,21 @@ export function Configuracoes() {
           <Linha
             titulo="Dados de exemplo"
             texto={
-              config.exemplo
+              comConta
+                ? 'Indisponível com login, para números fictícios não irem para a nuvem.'
+                : config.exemplo
                 ? 'Os exemplos estão carregados. Use a faixa no topo para apagá-los.'
                 : proprios
                   ? 'Disponível só com o Pila vazio, para não misturar com os seus dados.'
                   : 'Preenche o app com números fictícios para você conhecer cada tela.'
             }
             acao={
-              <Botao icone="sparkle" disabled={proprios || config.exemplo} onClick={() => setExemplo(true)}>
+              <Botao icone="sparkle" disabled={comConta || proprios || config.exemplo} onClick={() => setExemplo(true)}>
                 Carregar exemplo
               </Botao>
             }
           />
-          <p className="mt-3 text-[12.5px] leading-[18px] text-suave">Neste navegador: {contar(dados)}.</p>
+          <p className="mt-3 text-[12.5px] leading-[18px] text-suave">{sincronizando ? 'Na sua conta' : 'Neste navegador'}: {contar(dados)}.</p>
         </Secao>
 
         <Secao id={idsSecao.docs} icone="file-text" titulo="Documentos">
@@ -279,7 +305,11 @@ export function Configuracoes() {
         <Secao id={idsSecao.perigo} icone="warning" titulo="Zona de perigo" perigo>
           <Linha
             titulo="Apagar todos os dados"
-            texto="Remove lançamentos, patrimônio, investimentos, reserva, metas e preferências deste navegador. Não dá para desfazer."
+            texto={
+              usuario
+                ? 'Remove lançamentos, patrimônio, investimentos, reserva, metas e preferências deste navegador e da nuvem. A conta continua existindo. Não dá para desfazer.'
+                : 'Remove lançamentos, patrimônio, investimentos, reserva, metas e preferências deste navegador. Não dá para desfazer.'
+            }
             acao={
               <Botao variante="perigo-suave" icone="trash" onClick={() => setApagar(true)}>
                 Apagar tudo
@@ -299,14 +329,11 @@ export function Configuracoes() {
         texto={
           <>
             <p>Isso remove {contar(dados)} e volta o Pila ao estado inicial.</p>
+            {usuario && <p className="mt-2">Os dados também são apagados da nuvem, em todos os aparelhos. A sua conta continua existindo.</p>}
             <p className="mt-2">Se quiser guardar uma cópia, exporte um backup antes.</p>
           </>
         }
-        aoConfirmar={() => {
-          void loja.apagarTudo();
-          avisar('Todos os dados foram apagados.');
-          navegar('inicio');
-        }}
+        aoConfirmar={() => void apagarTudo()}
       />
 
       <Confirmacao
@@ -337,12 +364,20 @@ export function Configuracoes() {
                 O arquivo{importando.exportadoEm ? `, exportado em ${new Date(importando.exportadoEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })},` : ''}{' '}
                 tem {contar(importando.dados)}.
               </p>
-              <p className="mt-2">Os dados atuais deste navegador ({contar(dados)}) serão substituídos.</p>
+              <p className="mt-2">
+                {sincronizando
+                  ? `Os dados atuais (${contar(dados)}) serão substituídos aqui e o arquivo será enviado para a nuvem, chegando aos seus outros aparelhos.`
+                  : `Os dados atuais deste navegador (${contar(dados)}) serão substituídos.`}
+              </p>
             </>
           )
         }
         aoConfirmar={() => {
           if (!importando) return;
+          if (comConta && importando.dados.config.exemplo) {
+            avisar('Este backup tem dados de exemplo, que não vão para a nuvem. Saia da conta para usá-lo.', 'erro');
+            return;
+          }
           loja.substituir(importando.dados);
           avisar('Backup importado.');
         }}
@@ -431,11 +466,11 @@ export function Configuracoes() {
         />
       </Modal>
 
-      <Modal aberto={doc !== null} aoFechar={() => setDoc(null)} titulo={doc ? DOCUMENTOS[doc].titulo : ''} largura="md">
+      <Modal aberto={doc !== null} aoFechar={() => setDoc(null)} titulo={doc ? docs[doc].titulo : ''} largura="md">
         <div className="flex flex-col gap-3 text-[14px] leading-[22px] text-suave">
-          {doc && DOCUMENTOS[doc].paragrafos.map((p) => <p key={p}>{p}</p>)}
+          {doc && docs[doc].paragrafos.map((p) => <p key={p}>{p}</p>)}
           <p className="flex items-center gap-2 text-[12.5px]">
-            <Icone nome="info" tamanho={15} /> Versão local · última revisão em outubro de 2026.
+            <Icone nome="info" tamanho={15} /> Última revisão em outubro de 2026.
           </p>
         </div>
       </Modal>

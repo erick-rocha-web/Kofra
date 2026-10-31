@@ -1,8 +1,9 @@
 import { useMemo, useState, type ReactNode } from 'react';
-import { atualizar, loja, useDados } from '../estado/loja';
+import { atualizar, loja, useDados, useSinc } from '../estado/loja';
 import { useUI } from '../estado/ui';
 import { NAV } from '../layout/navegacao';
 import { Pagina } from '../layout/Pagina';
+import { useNuvem } from '../nuvem/conta';
 import { gerarExemplo } from '../storage/exemplo';
 import { temDadosProprios } from '../storage/padrao';
 import type { CardInicio, Dados } from '../storage/tipos';
@@ -291,6 +292,7 @@ export function Inicio() {
   const dados = useDados();
   const { mes, navegar, avisar } = useUI();
   const [exemplo, setExemplo] = useState(false);
+  const comConta = !!useNuvem().usuario || !!useSinc().usuarioId;
   const [personalizar, setPersonalizar] = useState(false);
   const vazio = !temDadosProprios(dados);
   const opcoes = useMemo(() => montarOpcoes(dados, mes), [dados, mes]);
@@ -359,7 +361,7 @@ export function Inicio() {
               ))}
             </ol>
             <div>
-              <Botao icone="sparkle" onClick={() => setExemplo(true)}>
+              <Botao icone="sparkle" disabled={comConta} onClick={() => setExemplo(true)}>
                 Ver com dados de exemplo
               </Botao>
             </div>

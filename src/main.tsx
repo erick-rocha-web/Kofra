@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { loja } from './estado/loja';
+import { iniciarNuvem } from './nuvem/conta';
 import { ProvedorUI } from './estado/ui';
 import './ui/estilos.css';
 
@@ -15,5 +16,5 @@ if (raiz) {
       </ProvedorUI>
     </StrictMode>,
   );
-  void loja.iniciar();
+  void loja.iniciar().then(iniciarNuvem);
 }

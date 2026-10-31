@@ -3,19 +3,35 @@ import { atualizar, useDados } from '../estado/loja';
 import { useUI } from '../estado/ui';
 import { copiarTexto } from '../estado/arquivos';
 import { Pagina } from '../layout/Pagina';
+import { useConta } from '../nuvem/conta';
 import { Botao, Campo, Entrada, Medalhao } from '../ui/base';
 import { Icone } from '../ui/Icone';
 import { Modal } from '../ui/Modal';
 
+const PERGUNTAS_DADOS: Record<'local' | 'nuvem', { p: string; r: string }[]> = {
+  local: [
+    {
+      p: 'Onde ficam os meus dados?',
+      r: 'No armazenamento deste navegador, neste aparelho. Nada sai daqui, a não ser quando você exporta um backup ou usa o Assistente.',
+    },
+    {
+      p: 'Como uso o Pila em outro aparelho?',
+      r: 'Em Configurações → Dados, exporte um backup (arquivo .json). No outro aparelho, abra o Pila e importe esse arquivo.',
+    },
+  ],
+  nuvem: [
+    {
+      p: 'Onde ficam os meus dados?',
+      r: 'Sem login, tudo fica neste navegador. Com login, os dados também ficam guardados no Supabase, num servidor em São Paulo, e só a sua conta acessa.',
+    },
+    {
+      p: 'Como uso o Pila em outro aparelho?',
+      r: 'Entre com a mesma conta em Configurações → Conta. Seus dados ficam iguais em todos os aparelhos. Sem internet, as alterações ficam no aparelho e vão quando a conexão voltar.',
+    },
+  ],
+};
+
 const PERGUNTAS: { p: string; r: string }[] = [
-  {
-    p: 'Onde ficam os meus dados?',
-    r: 'No armazenamento deste navegador, neste aparelho. O Pila não tem servidor: nada sai daqui, a não ser quando você exporta um backup ou usa o Assistente.',
-  },
-  {
-    p: 'Como uso o Pila em outro aparelho?',
-    r: 'Em Configurações → Dados, exporte um backup (arquivo .json). No outro aparelho, abra o Pila e importe esse arquivo. A sincronização automática chega com a versão na nuvem.',
-  },
   {
     p: 'Com que frequência devo fazer backup?',
     r: 'Uma vez por mês, e sempre antes de limpar os dados do navegador ou trocar de aparelho. Limpar o navegador apaga os dados do Pila.',
@@ -111,6 +127,7 @@ function ModalContatos({ aberto, aoFechar }: { aberto: boolean; aoFechar: () => 
 
 export function Suporte() {
   const { config } = useDados();
+  const { disponivel } = useConta();
   const { avisar, navegar } = useUI();
   const [editar, setEditar] = useState(false);
   const { whatsapp, email } = config.contatoSuporte;
@@ -125,7 +142,7 @@ export function Suporte() {
             Perguntas frequentes
           </h2>
           <div className="cartao overflow-hidden">
-            {PERGUNTAS.map((q) => (
+            {[...PERGUNTAS_DADOS[disponivel ? 'nuvem' : 'local'], ...PERGUNTAS].map((q) => (
               <details key={q.p} className="group border-t border-borda first:border-t-0">
                 <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-4 text-[14.5px] font-semibold hover:bg-surface2 [&::-webkit-details-marker]:hidden">
                   <span className="min-w-0 flex-1">{q.p}</span>

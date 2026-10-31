@@ -1,18 +1,17 @@
 # Pila — Roadmap
 
-A v1 roda inteira no navegador, sem servidor ("local agora"). Este é o caminho para a versão na nuvem ("nuvem depois") e para o que ficou de fora de propósito. A ordem sugere dependências: cada etapa usa a anterior.
+Sem login, o Pila roda inteiro no navegador. Com login, os dados também ficam guardados no Supabase, num servidor em São Paulo, e só a sua conta acessa. Este é o caminho a partir daqui e o que ficou de fora de propósito. A ordem sugere dependências: cada etapa usa a anterior.
 
-## Etapa 1 — Conta e nuvem (base de tudo o que vem depois)
+## Etapa 1 — Conta e nuvem (feita)
 
 **Objetivo:** usar o Pila em qualquer aparelho, com os mesmos dados, sem depender do claude.ai.
 
-- **Backend com API** que guarda o objeto `Dados` por usuário. O app já fala com uma interface única (`src/storage/armazenamento.ts`: `carregar`, `salvar`, `apagarTudo`); basta criar a versão `ArmazenamentoApi` e escolher qual usar.
-- **Banco de dados:** começar guardando o documento inteiro por usuário (simples e igual ao formato do backup); separar em tabelas (lançamentos, recorrentes, patrimônio…) quando houver relatórios no servidor ou muitos dados.
-- **Login:** e-mail com link mágico ou Google/Apple; nada de senha guardada pelo Pila. Sessão curta no navegador e renovação automática.
-- **Sincronização:** salvar alterações com versão (número ou data) e resolver conflito de dois aparelhos pela mais recente por item; manter o IndexedDB como cópia local para funcionar sem internet.
-- **Migração da v1:** na primeira entrada, oferecer "enviar os dados deste navegador para a sua conta" (usa o mesmo formato do backup JSON).
-- **Privacidade e segurança:** criptografia em trânsito e em repouso, exportar e apagar a conta a qualquer momento, registro de acessos.
-- **Hospedagem:** o front continua sendo um arquivo estático (CDN); a API num serviço gerenciado com backups diários.
+- **Feito:** Supabase no plano Free, em São Paulo. Um documento `jsonb` por usuário com o objeto `Dados` inteiro, protegido por RLS.
+- **Feito:** login por e-mail e senha, redefinição de senha pelo fluxo PKCE.
+- **Feito:** sincronização por revisão, com o IndexedDB como cópia local para funcionar sem internet. O conflito entre aparelhos é resolvido no documento inteiro: a pessoa escolhe a versão, e a descartada pode virar backup.
+- **Feito:** na primeira entrada, o app oferece enviar os dados do navegador para a conta.
+- **Falta:** fechar o cadastro de novas contas, apagar a própria conta pelo app e e-mail próprio (o e-mail grátis do Supabase só envia para o dono da conta, 2 por hora, e a redefinição de senha depende dele).
+- **Depois:** separar o documento em tabelas (lançamentos, recorrentes, patrimônio…) quando houver relatórios no servidor ou muitos dados; login social, se fizer sentido.
 
 ## Etapa 2 — Compartilhar
 

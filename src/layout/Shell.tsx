@@ -1,7 +1,11 @@
 import { useState, type ReactNode } from 'react';
-import { loja, useDados, useEstadoLoja } from '../estado/loja';
+import { loja, useDados, useEstadoLoja, useSinc } from '../estado/loja';
 import { useUI } from '../estado/ui';
 import { iniciais } from '../engine/formato';
+import { sair, useConta, useNuvem } from '../nuvem/conta';
+import type { Situacao } from '../nuvem/sincronizacao';
+import { textoSituacao } from '../nuvem/textos';
+import { DialogosNuvem } from '../paginas/conta/DialogosNuvem';
 import { dadosVazios } from '../storage/padrao';
 import { Botao, BotaoIcone, cx } from '../ui/base';
 import { Icone } from '../ui/Icone';
@@ -36,14 +40,32 @@ function DialogoSair({ aberto, aoFechar }: { aberto: boolean; aoFechar: () => vo
       }
     >
       <div className="flex flex-col gap-3 text-[14px] leading-[21px] text-suave">
-        <p>Esta versão do Pila ainda não tem conta com login: seus dados ficam guardados só neste navegador.</p>
+        <p>Aqui não há conta com login: seus dados ficam guardados só neste navegador.</p>
         <p>
           Para levar tudo para outro aparelho, exporte um backup em <strong className="text-texto">Configurações → Dados</strong> e
-          importe lá. A conta com login e sincronização está no plano da versão na nuvem.
+          importe lá.
         </p>
       </div>
     </Modal>
   );
+}
+
+const ICONE_SITUACAO: Record<Situacao, { icone: string; cor: string }> = {
+  parada: { icone: 'cloud-arrow-up', cor: 'text-suave' },
+  verificando: { icone: 'cloud-arrow-up', cor: 'text-suave' },
+  enviando: { icone: 'cloud-arrow-up', cor: 'text-marca' },
+  salvo: { icone: 'check-circle', cor: 'text-receita' },
+  'sem-internet': { icone: 'wifi-high', cor: 'text-alerta' },
+  erro: { icone: 'warning-circle', cor: 'text-despesa' },
+  decidir: { icone: 'warning-circle', cor: 'text-alerta' },
+};
+
+function IndicadorNuvem() {
+  const { usuario, situacao } = useNuvem();
+  const { sincronizadoEm } = useSinc();
+  if (!usuario) return null;
+  const { icone, cor } = ICONE_SITUACAO[situacao];
+  return <Icone nome={icone} tamanho={15} className={cor} titulo={textoSituacao(situacao, sincronizadoEm)} />;
 }
 
 function Perfil({ aoSair }: { aoSair: () => void }) {
@@ -66,6 +88,7 @@ function Perfil({ aoSair }: { aoSair: () => void }) {
         <span className={cx('min-w-0 flex-1 truncate text-[14px] font-medium', !nome && 'text-suave')}>
           {nome || 'Seu nome'}
         </span>
+        <IndicadorNuvem />
       </button>
       <BotaoIcone icone="sign-out" rotulo="Sair" variante="fantasma" tamanho={34} tamanhoIcone={19} onClick={aoSair} />
     </div>
@@ -247,15 +270,34 @@ function Faixas() {
 }
 
 export function Shell({ children }: { children: ReactNode }) {
-  const [sair, setSair] = useState(false);
+  const [dialogoSair, setDialogoSair] = useState(false);
+  const { disponivel } = useConta();
+  const { usuario } = useNuvem();
+  const { navegar, avisar } = useUI();
+
+  async function aoSair() {
+    if (!disponivel) {
+      setDialogoSair(true);
+    } else if (usuario) {
+      if (await sair()) {
+        avisar('Você saiu da conta.');
+        navegar('inicio');
+      }
+    } else {
+      navegar('configuracoes');
+      setTimeout(() => document.getElementById('conta')?.scrollIntoView({ block: 'start' }), 50);
+    }
+  }
+
   return (
     <div className="min-h-[100dvh] lg:pl-[248px]">
-      <BarraLateral aoSair={() => setSair(true)} />
+      <BarraLateral aoSair={aoSair} />
       <Faixas />
       {children}
-      <NavInferior aoSair={() => setSair(true)} />
+      <NavInferior aoSair={aoSair} />
       <Toasts />
-      <DialogoSair aberto={sair} aoFechar={() => setSair(false)} />
+      <DialogoSair aberto={dialogoSair} aoFechar={() => setDialogoSair(false)} />
+      <DialogosNuvem />
     </div>
   );
 }
